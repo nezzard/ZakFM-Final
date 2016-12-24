@@ -81,7 +81,7 @@ for(var i = 0; i <= result.length-1; i++) {
 
 
 							}else {
-								console.log("Посты найдены")
+								//console.log("Посты найдены")
 								wp.nextp().id(response.id).ordernum(result[i]['id']).create({})
 							}
 
