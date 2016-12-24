@@ -37,7 +37,7 @@ io.on('connection', function (socket) {
   function writet(myJson){
 		fs.writeFile( "filename.json", JSON.stringify( myJson ), "utf8" );
 		console.log('11111111111111111111111111');
-			//	console.log(myJson);
+		//console.log(myJson);
 
   }
 var myJson = new Array();
@@ -49,11 +49,11 @@ for(var i = 0; i <= result.length-1;  ) {
   	//console.log(result[i]);
 
   		wp.song().search( result[i]['artist']).then(function( posts ) {
-  				console.log(wp.media().id( posts[0]['featured_media'] ));
+
 					return posts[0]['featured_media'];
   		}).then(function(data){  			
 		  	wp.song().search( result[i]['artist']+' - '+result[i]['song'] ).then(function( posts ) {
-		  				
+		  				console.log(data);
 
 
 							if(!posts[0]){
@@ -91,8 +91,19 @@ for(var i = 0; i <= result.length-1;  ) {
 
 							}else {
 								
-								console.log("Посты найдены");
-								myJson.push({key: result[i]['id'], post: posts, end: data});
+								console.log("Посты найдены "+posts[0]['featured_media']);
+
+								if(posts[0]['featured_media'] === 0){
+									myJson.push({key: result[i]['id'], post: posts[0], end: 0});
+								}
+			  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
+			  					if(posts[0]['featured_media'] !== 0){
+			  						console.log('yes');
+			  						myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
+			  					}
+
+			  				})
+
 								writet(myJson);
 
 							}
@@ -152,9 +163,15 @@ for(var i = 0; i <= result.length-1;  ) {
 												        description: 'More explanatory information'
 												    })
 												    .then(function( responses ) {
-															 return wp.song().id( responsed.id ).update({
+															 	wp.song().id( responsed.id ).update({
 																  featured_media: responses.id
-																});
+																})
+																return responses.id;
+												    }).then(function(mediaId){
+																	wp.media().id( mediaId ).then(function(media){
+										  							myJson.push({key: result[i]['id'], post: responsed, end: media.guid.rendered});
+										  							writet(myJson);
+										  						})												    	
 												    })
 
 									    }
@@ -168,10 +185,17 @@ for(var i = 0; i <= result.length-1;  ) {
 
 						}
 						else {
-							console.log('not find')
+							console.log('not find');
+							myJson.push({key: result[i]['id'], post: responsed, end: 0});
+							writet(myJson);
+
+
 						}
-							myJson.push({key: result[i]['id'], post: responsed});
-												writet(myJson);
+
+
+
+							//myJson.push({key: result[i]['id'], post: responsed});
+												
 							return  Promise.resolve(responsed);
 
 					})

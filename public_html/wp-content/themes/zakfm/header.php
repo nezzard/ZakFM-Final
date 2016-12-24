@@ -13,6 +13,7 @@
   var socket = io('http://zakarpattyafm.com.ua:7080');
   socket.emit('seyGet');
   socket.on('sendSongg', function (data) {
+    console.log(data);
     loadPlay(data);
   });
 
@@ -21,7 +22,6 @@
 
   function loadPlay(data){    
     
-console.log(data[4]);
 
          /*   jQuery.getJSON("http://zakarpattyafm.com.ua/wp-json/wp/v2/media/"+value['post'][0].featured_media,
                 function(data) {
@@ -31,38 +31,14 @@ console.log(data[4]);
             }) */
 
 
-function imm(data){
-dima = jQuery.getJSON("http://zakarpattyafm.com.ua/wp-json/wp/v2/media/"+13158)
 
-            console.log(dima);
-            var yura;
-            ddd = dima.done(function(e){
-                return e.source_url;
-
-            })
-            console.log(ddd);
-}
-
-
-
-
-
-
-
-var dima = new Array();
-    jQuery.each( data, function( key, value ) {
-
-
-jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">1</div><a href="#" class="one-song-thumb"><img class="minithumb" src="'+imm(value['post'][0].featured_media)+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post[0].artist[0]+'</span>'+value.post[0].song[0]+'</a></div></div></div></div>');
+jQuery.each( data, function( key, value ) {
+jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">1</div><a href="#" class="one-song-thumb"><img class="minithumb" src="'+value.end+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post.artist[0]+'</span>'+value.post.song[0]+'</a></div></div></div></div>');
 
       
      });
         
-        console.log(dima);
 
-dima.forEach(function(item) {
-  console.log(item);
-});
   }
 </script>    
 
