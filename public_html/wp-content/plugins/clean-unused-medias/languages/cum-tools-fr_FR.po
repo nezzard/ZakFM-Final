@@ -1,0 +1,375 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Clean Unused Medias v1.00\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-06 12:39+0000\n"
+"PO-Revision-Date: 2016-10-06 12:40+0000\n"
+"Last-Translator: xuxu <xuxu.fr@gmail.com>\n"
+"Language-Team: French (France)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes\n"
+"Language: fr-FR"
+
+#: library/functions.php:502
+msgid "CUM Tools"
+msgstr "Outils CUM"
+
+#: library/functions.php:531
+msgid "Check it"
+msgstr "Vérifier"
+
+#: library/functions.php:442
+msgid "Deleting medias in progress..."
+msgstr "Suppression des médias en cours ..."
+
+#: library/functions.php:443
+msgid "Relaunching crawl..."
+msgstr "Nouveau traitement en cours de lancement ..."
+
+#: library/functions.php:444
+msgid "Stopping crawl..."
+msgstr "Arrêt du traitement en cours ..."
+
+#: library/functions.php:445
+msgid "Resuming crawl..."
+msgstr "Traitement en cours de reprise ..."
+
+#: library/functions.php:446
+msgid "Launching crawl..."
+msgstr "Lancement du traitement en cours ..."
+
+#: library/functions.php:447
+msgid "Loading..."
+msgstr "Chargement en cours ..."
+
+#: library/functions.php:480 library/functions.php:553
+msgid "Launch Thickbox"
+msgstr "Lancement de Thickbox"
+
+#: library/functions.php:491 library/functions.php:491
+msgid "CUM tools"
+msgstr "Outils CUM"
+
+#: library/functions.php:561
+msgid ""
+"Delete the medias is irreversible. Take precautions by making a backup and / "
+"or by being sure you really want to do it."
+msgstr ""
+"La suppression des médias est irréversible. Prenez des précautions en "
+"faisant une sauvegarde et / ou en étant certain de vouloir le faire."
+
+#: library/functions.php:575
+msgid "Clean Unused Medias"
+msgstr "Clean Unused Medias"
+
+#: library/functions.php:577
+msgid "Filters"
+msgstr "Filtres"
+
+#: library/functions.php:581
+msgid "Medias per page"
+msgstr "Médias par page"
+
+#: library/functions.php:591
+msgid "Filter with keywords"
+msgstr "Filtrer par mots clés"
+
+#: library/functions.php:594
+msgid "Check / Uncheck filters"
+msgstr "Cocher / Décocher les filtres"
+
+#: library/functions.php:597
+msgid "Not the site favicon"
+msgstr "N'est pas le favicon du site"
+
+#: library/functions.php:600
+msgid "Not a post thumbnail"
+msgstr "N'est pas une image à la une"
+
+#: library/functions.php:603
+msgid "Not related to a post"
+msgstr "Non relatif à un élément"
+
+#: library/functions.php:606
+msgid "Not in ACF fields"
+msgstr "Non présent dans un champ ACF"
+
+#: library/functions.php:610
+msgid "Not in post's / page's / custom post type's content"
+msgstr "N'est pas dans le contenu de l'article / page / custom post type"
+
+#: library/functions.php:615
+msgid "Not in post's / page's / custom post type's metas"
+msgstr "N'est pas dans les métas de l'article / page / custom post type"
+
+#: library/functions.php:620
+msgid "Not in user's metas"
+msgstr "N'est pas dans les métas utilisateur"
+
+#: library/functions.php:625
+msgid "Not in site's options"
+msgstr "N'est pas dans les options du site"
+
+#: library/functions.php:629
+msgid ""
+"Those features need to crawl all the post's contents, post's metas, user's "
+"metas and site's options. It may takes some times."
+msgstr ""
+"Ces options nécessitent de parcourir tous les contenus, les métas de ces "
+"derniers et des utilisateurs, ainsi que les options du site. Cela peut "
+"prendre un certains temps."
+
+#: library/functions.php:633
+msgid "Loading ..."
+msgstr "Chargement en cours ..."
+
+#: library/functions.php:636 ws/list.medias.php:154
+msgid "Check / Uncheck all"
+msgstr "Cocher / Décocher tout"
+
+#: library/functions.php:637 ws/list.medias.php:155
+msgid "Delete selected medias"
+msgstr "Supprimer les médias sélectionnés"
+
+#: ws/crawl.change.status.php:10 ws/crawl.medias.php:10 
+#: ws/do.clean.medias.php:10 ws/get.medias.used.in.php:10 
+#: ws/get.medias.used.in.php:20 ws/list.medias.php:26
+msgid "Error. Parameters missing."
+msgstr "Erreur. Paramètres manquants."
+
+#: ws/crawl.change.status.php:21 ws/crawl.medias.php:21 
+#: ws/do.clean.medias.php:19 ws/get.medias.used.in.php:16 ws/list.medias.php:33
+msgid "Error. Access denied."
+msgstr "Erreur. Accès refusé."
+
+#: ws/crawl.change.status.php:48
+msgid "Reset crawl."
+msgstr "Nouveau traitement."
+
+#: ws/crawl.change.status.php:58
+msgid "Pause crawl."
+msgstr "Mise en pause du traitement."
+
+#: ws/crawl.change.status.php:68
+msgid "Resume crawl."
+msgstr "Poursuivre le traitement."
+
+#: ws/crawl.medias.php:52
+msgid ""
+"The crawl is already processing somewhere else (in WP-Cron or in another "
+"session)."
+msgstr ""
+"Le traitement est déjà en cours de traitement quelque part (par le Cron "
+"WordPress ou dans une autre session).\n"
+
+#: ws/crawl.medias.php:53 ws/crawl.medias.php:64 ws/crawl.medias.php:123
+msgid " <strong>%s&percnt;</strong> (%s/%s) actually treated."
+msgstr " <strong>%s&percnt;</strong> (%s/%s) actuellement traité."
+
+#: ws/crawl.medias.php:54 ws/crawl.medias.php:114 ws/crawl.medias.php:131
+msgid ""
+" <a href=\"#cum-refresh\" class=\"cum-refresh-result\">Refresh the "
+"results</a> |"
+msgstr ""
+" <a href=\"#cum-refresh\" class=\"cum-refresh-result\">Actualiser les "
+"résultats</a> |\n"
+
+#: ws/crawl.medias.php:55 ws/crawl.medias.php:132
+msgid " <a href=\"#cum-pause\" class=\"cum-pause\">Stop the crawler</a>"
+msgstr " <a href=\"#cum-pause\" class=\"cum-pause\">Arrêter le traitement</a>"
+
+#: ws/crawl.medias.php:63 ws/crawl.medias.php:122
+msgid "The crawl was stopped."
+msgstr "Le traitement a été arrêté."
+
+#: ws/crawl.medias.php:65 ws/crawl.medias.php:124
+msgid ""
+" <a href=\"#cum-recrawl\" class=\"cum-recrawl\">Relaunch the crawl</a> or <a "
+"href=\"#cum-resume\" class=\"cum-resume\">resume</a> the lastest one</a>."
+msgstr ""
+" <a href=\"#cum-recrawl\" class=\"cum-recrawl\">Relancer un nouveau "
+"traitement</a> ou <a href=\"#cum-resume\" class=\"cum-resume\">poursuivre</a>"
+" celui en cours</a>."
+
+#: ws/crawl.medias.php:109
+msgid "The crawl was completed on %s at %s."
+msgstr "Traitement achevé le %s à %s."
+
+#: ws/crawl.medias.php:113
+msgid " %s media treated."
+msgid_plural " %s medias treated."
+msgstr[0] " %s média vérifié."
+msgstr[1] " %s médias vérifiés."
+
+#: ws/crawl.medias.php:115
+msgid " <a href=\"#cum-recrawl\" class=\"cum-recrawl\">Relaunch the crawl</a>"
+msgstr ""
+" <a href=\"#cum-recrawl\" class=\"cum-recrawl\">Relancer un nouveau "
+"traitement</a>"
+
+#: ws/crawl.medias.php:130
+msgid "<strong>%s&percnt;</strong> (%s/%s) actually treated."
+msgstr "<strong>%s&percnt;</strong> (%s/%s) actuellement traité."
+
+#: ws/do.clean.medias.php:23
+msgid "All good."
+msgstr "Tout va bien."
+
+#: ws/do.clean.medias.php:25
+msgid "No medias were selected."
+msgstr "Aucun média n'a été sélectionné."
+
+#: ws/do.clean.medias.php:36
+msgid "%s media deleted."
+msgid_plural "%s medias deleted."
+msgstr[0] " %s média supprimé."
+msgstr[1] " %s médias supprimés."
+
+#: ws/do.clean.medias.php:39
+msgid "%s media can't be deleted."
+msgid_plural "%s medias can't be deleted."
+msgstr[0] " %s média impossible à supprimer."
+msgstr[1] " %s médias impossible à supprimer."
+
+#: ws/get.medias.used.in.php:65
+msgid "This media is:"
+msgstr "Ce média est :"
+
+#: ws/get.medias.used.in.php:70
+msgid "used as a favicon"
+msgstr "utilisé comme favicon"
+
+#: ws/get.medias.used.in.php:76
+msgid "a featured image of <a href=\"%s\" target=\"_blank\">%s</a>"
+msgstr "une image à la une de <a href=\"%s\" target=\"_blank\">%s</a>"
+
+#: ws/get.medias.used.in.php:79
+msgid "a featured image of:"
+msgstr "une image à la une de :"
+
+#: ws/get.medias.used.in.php:84 ws/get.medias.used.in.php:107 
+#: ws/get.medias.used.in.php:125 ws/get.medias.used.in.php:143 
+#: ws/get.medias.used.in.php:161
+msgid "<a href=\"%s\" target=\"_blank\">%s</a>"
+msgstr "<a href=\"%s\" target=\"_blank\">%s</a>"
+
+#: ws/get.medias.used.in.php:93
+msgid "related to <a href=\"%s\" target=\"_blank\">%s</a>"
+msgstr "relatif à <a href=\"%s\" target=\"_blank\">%s</a>"
+
+#: ws/get.medias.used.in.php:99
+msgid "used in an ACF of <a href=\"%s\" target=\"_blank\">%s</a>"
+msgstr "utilisé dans un champ ACF de <a href=\"%s\" target=\"_blank\">%s</a>"
+
+#: ws/get.medias.used.in.php:102
+msgid "used in an ACF of:"
+msgstr "utilisé dans un champ ACF de :"
+
+#: ws/get.medias.used.in.php:117
+msgid "used in the content of <a href=\"%s\" target=\"_blank\">%s</a>"
+msgstr "utilisé dans le contenu de <a href=\"%s\" target=\"_blank\">%s</a>"
+
+#: ws/get.medias.used.in.php:120
+msgid "used in the content of:"
+msgstr "utilisé dans le contenu de :"
+
+#: ws/get.medias.used.in.php:135
+msgid "used in the meta of <a href=\"%s\" target=\"_blank\">%s</a>"
+msgstr "utilisé dans une meta pour <a href=\"%s\" target=\"_blank\">%s</a>"
+
+#: ws/get.medias.used.in.php:138
+msgid "used in the meta of:"
+msgstr "utilisé dans une meta pour :"
+
+#: ws/get.medias.used.in.php:153
+msgid "used in meta for user <a href=\"%s\" target=\"_blank\">%s</a>"
+msgstr ""
+"utilisé dans une meta pour l'utilisateur <a href=\"%s\" target=\"_blank\">"
+"%s</a>"
+
+#: ws/get.medias.used.in.php:156
+msgid "used in meta for the users:"
+msgstr "utilisé dans une meta pour les utilisateurs :"
+
+#: ws/get.medias.used.in.php:171
+msgid "used in the option <strong>`%s`</strong>"
+msgstr "utilisé dans l'option <strong>`%s`</strong>"
+
+#: ws/get.medias.used.in.php:174
+msgid "used in the options:"
+msgstr "utilisé dans les options :"
+
+#: ws/get.medias.used.in.php:178
+msgid "<strong>`%s`</strong>"
+msgstr ""
+"<strong>`%s`</strong>\n"
+
+#: ws/get.medias.used.in.php:189 ws/list.medias.php:198
+msgid "This media is used anywhere."
+msgstr "Ce média n'est utilisé nulle part."
+
+#: ws/list.medias.php:147
+msgid "No result matching to filters."
+msgstr "Aucun résultat ne correspond aux critères."
+
+#: ws/list.medias.php:150
+msgid "<strong>%s</strong> media found."
+msgid_plural "<strong>%s</strong> medias found."
+msgstr[0] "<strong>%s</strong> media trouvé."
+msgstr[1] "<strong>%s</strong> medias trouvés."
+
+#: ws/list.medias.php:172
+msgid "Media page"
+msgstr "Page du média"
+
+#: ws/list.medias.php:173
+msgid "Uploaded on"
+msgstr "Mis en ligne le"
+
+#: ws/list.medias.php:198
+msgid "You can check it again."
+msgstr "Vous pouvez revérifier."
+
+#: ws/list.medias.php:209
+msgid "&laquo; previous"
+msgstr "&laquo; précédent"
+
+#: ws/list.medias.php:210
+msgid "next &raquo;"
+msgstr "suivant &raquo;"
+
+#. Description of the plugin
+msgid ""
+"Clean Unused Medias : Simple way to delete medias not attached to any posts "
+"or pages"
+msgstr ""
+"Clean Unused Medias : Une solution simple pour supprimer les médias non "
+"reliés à un article ou une page"
+
+#. URI of the plugin
+msgid ""
+"https://xuxu.fr/2016/09/28/supprimer-les-fichiers-non-utilises-sous-"
+"wordpress/"
+msgstr ""
+"https://xuxu.fr/2016/09/28/supprimer-les-fichiers-non-utilises-sous-"
+"wordpress/\n"
+
+#. Author of the plugin
+msgid "xuxu.fr"
+msgstr "xuxu.fr"
+
+#. Author URI of the plugin
+msgid "https://xuxu.fr"
+msgstr "https://xuxu.fr"
