@@ -33,7 +33,14 @@
 
 
 jQuery.each( data, function( key, value ) {
-jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">1</div><a href="#" class="one-song-thumb"><img class="minithumb" src="'+value.end+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post.artist[0]+'</span>'+value.post.song[0]+'</a></div></div></div></div>');
+var img;
+if(value.end){
+    img = value.end;
+}
+else {
+    img = 'http://placehold.it/150x150';
+}
+jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">1</div><a href="#" class="one-song-thumb"><img class="minithumb" src="'+img+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post.artist[0]+'</span>'+value.post.song[0]+'</a></div></div></div></div>');
 
       
      });

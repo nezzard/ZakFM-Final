@@ -97,10 +97,9 @@ for(var i = 0; i <= result.length-1;  ) {
 									myJson.push({key: result[i]['id'], post: posts[0], end: 0});
 								}
 			  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
-			  					if(posts[0]['featured_media'] !== 0){
-			  						console.log('yes');
+			  					
 			  						myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
-			  					}
+			  				
 
 			  				})
 
@@ -170,8 +169,11 @@ for(var i = 0; i <= result.length-1;  ) {
 												    }).then(function(mediaId){
 																	wp.media().id( mediaId ).then(function(media){
 										  							myJson.push({key: result[i]['id'], post: responsed, end: media.guid.rendered});
-										  							writet(myJson);
-										  						})												    	
+										  							return writet(myJson);
+
+										  						}).then(function(ttt){
+										  							fs.unlink("/tmp/img/"+artist+".png");
+										  						})				    	
 												    })
 
 									    }
