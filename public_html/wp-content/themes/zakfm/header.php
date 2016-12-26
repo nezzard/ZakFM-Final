@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?php bloginfo('description'); ?>">
     <meta name="author" content="">
-      <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
     <title><?php bloginfo('name'); ?></title>
 <script>
@@ -21,32 +21,30 @@
 
 
   function loadPlay(data){    
-    
 
-         /*   jQuery.getJSON("http://zakarpattyafm.com.ua/wp-json/wp/v2/media/"+value['post'][0].featured_media,
-                function(data) {
-                    dima.push({key: 1, p: 1});
-                    jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">1</div><a href="#" class="one-song-thumb"><img class="minithumb" src="'+data.media_details.sizes.full.source_url+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="'+value.post[0].youtube[0]+'"><span>'+value.post[0].artist[0]+'</span>'+value.post[0].song[0]+'</a></div></div></div></div>');
-             
-            }) */
+
+data.sort(function(a, b) {
+  return a.key - b.key;
+});
+
 
 
 
 jQuery.each( data, function( key, value ) {
-var img;
-if(value.end){
-    img = value.end;
-}
-else {
-    img = 'http://placehold.it/150x150';
-}
-jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">1</div><a href="#" class="one-song-thumb"><img class="minithumb" src="'+img+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post.artist[0]+'</span>'+value.post.song[0]+'</a></div></div></div></div>');
+    var img;
+    if(value.end){
+        img = value.end;
+    }
+    else {
+        img = 'http://placehold.it/150x150';
+    }
+    jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">'+value.key+'</div><a href="#" class="one-song-thumb"><img class="minithumb" src="'+img+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post.artist[0]+'</span>'+value.post.song[0]+'</a></div></div></div></div>');
 
       
-     });
+});
         
 
-  }
+}
 </script>    
 
     <?php if(!is_user_logged_in()){
