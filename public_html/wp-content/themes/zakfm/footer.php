@@ -30,7 +30,7 @@
         $(document).pjax('header', '.wrap-in')
     </script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/boots.min.js"  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
     <!-- bxSlider Javascript file -->
 	<script src="<?php bloginfo('template_url'); ?>/js/jquery.bxslider.min.js" ></script>
