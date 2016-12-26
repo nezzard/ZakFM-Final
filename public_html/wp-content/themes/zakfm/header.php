@@ -11,7 +11,16 @@
     <title><?php bloginfo('name'); ?></title>
 <script>
   var socket = io('http://zakarpattyafm.com.ua:7080');
+  socket.emit('ttt', 111);
   socket.emit('seyGet');
+  socket.on('changed', function(changed){
+    var image = changed.image;
+
+    changed = JSON.parse(changed.changed)[0];
+    jQuery('.aplayer-title').html(changed.song);
+    jQuery('.aplayer-author').html('- '+changed.artist);
+    jQuery('.aplayer-pic').css('background-image', 'url('+image+')');
+  })
   socket.on('sendSongg', function (data) {
     console.log(data);
     loadPlay(data);
@@ -31,6 +40,7 @@ data.sort(function(a, b) {
 
 
 jQuery.each( data, function( key, value ) {
+    console.log(value);
     var img;
     if(value.end){
         img = value.end;

@@ -25,8 +25,27 @@ wp.song = wp.registerRoute('wp/v2', '/song/(?P<id>\\d+)', {
 
 
 
-
+var tt;
 io.on('connection', function (socket) {
+
+	socket.on('songchanged', function(changed){
+rp("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+encodeURIComponent(changed[0]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json")
+    .then(function (htmlString) {
+    var image = JSON.parse(htmlString).artist['image'][2]['#text'];
+      		socket.broadcast.emit('changed', {"image": image, "changed": changed});
+
+    })
+    .catch(function (err) {
+        // Crawling failed...
+    });
+
+
+
+
+	});
+
+		
+
 
 
   socket.emit('getList');
@@ -34,6 +53,9 @@ io.on('connection', function (socket) {
   socket.on('playlist', function (data) {
     var result = JSON.parse(data);
     
+
+
+
   function writet(myJson){
 		fs.writeFile( "filename.json", JSON.stringify( myJson ), "utf8" );
 		console.log('11111111111111111111111111');
@@ -43,6 +65,9 @@ io.on('connection', function (socket) {
 var myJson = new Array();
 
 for(var i = 0; i <= result.length-1;  ) {
+
+
+
 
   function test(i) {
   setTimeout(function(){

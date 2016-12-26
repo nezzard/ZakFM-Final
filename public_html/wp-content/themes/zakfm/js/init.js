@@ -9,8 +9,8 @@ var option = {
     preload: 'metadata',                                               // Optional, the way to load music, can be 'none' 'metadata' 'auto', default: 'auto'
     listmaxheight: '513px',                                             // Optional, max height of play list
     music: {                                                           // Required, music info, see: ###With playlist
-        //title: parserVal['parserVal']['parsed'][2],                                          // Required, music title
-        //author: parserVal['parserVal']['parsed'][3],                          // Required, music author
+        title: "Радіо",                                          // Required, music title
+        author: "Закарпаття ФМ",                          // Required, music author
         url: 'http://195.234.148.51:8000/;stream.mp3',  // Required, music url
         //pic: parserVal['parserVal']['lastfm'],  // Optional, music picture
         lrc: '[00:00.00]lrc here\n[00:01.00]aplayer'                   // Optional, lrc, see: ###With lrc

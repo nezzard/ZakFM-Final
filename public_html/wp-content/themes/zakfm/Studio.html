@@ -28,7 +28,7 @@
 <body bgcolor="#3a3c3d" width="100%" height="100%" text="#000000">
 <div align="center">
 <br>
-<table width="100%" border="0" bordercolor="#666666">
+<table width="100%" border="0" id="table1" bordercolor="#666666">
   <tr bgcolor="#6b0a0a" bordercolor="#999999"> 
     <td> 
       <div align="center"><font FACE="Play" size="-1" color="#adadad"><b>Тепер грає:</b></div>
@@ -39,7 +39,7 @@
   </tr>
   <tr bordercolor="#999999"> 
     <td> 
-      <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>1I'm On Your Side</b></font></div>
+      <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>I'm On Your Side</b></font></div>
     </td>
     <td> 
       <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>Th Express</b></font></div>
@@ -63,13 +63,13 @@
 
   <tr> 
     <td> 
-      <div align="center"><b><font FACE="Play" size="-2" color="#adadad">1</font></b></div>
+      <div align="center"><b><font FACE="Play" size="-2" color="#adadad">100</font></b></div>
     </td>
     <td> 
-      <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>5 Хвилин</b></font></div>
+      <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>В твоей голове</b></font></div>
     </td>
     <td> 
-      <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>Без Обмежень</b></font></div>
+      <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>Дима Билан</b></font></div>
     </td>
   </tr>
 
@@ -166,25 +166,38 @@
       <script type="text/javascript">
 
 
-var TableData = new Array();
+var TableDataCur = new Array();    
+$('#table1 tr').each(function(row, tr){
+      console.log(row);
+      if(row > 0 ){
+      TableDataCur[row]={
 
-    
+          "song" :$(tr).find('td:eq(0) b').text()
+          , "artist" : $(tr).find('td:eq(1) b').text()
+        }
+        }     
+   
+}); 
+TableDataCur.shift(); 
+stringTableCur = JSON.stringify(TableDataCur);
+
+var TableData = new Array();    
 $('#table2 tr').each(function(row, tr){
       console.log(row);
-      if(row > 0 && row <= 5){
+      if(row > 0 && row <= 6){
       TableData[row]={
 
           "id" : $(tr).find('td:eq(0) b').text()
           , "song" :$(tr).find('td:eq(1) b').text()
           , "artist" : $(tr).find('td:eq(2) b').text()
-      } 
-      }
-     
+        } 
+      }    
    
 }); 
 TableData.shift(); 
-
 stringTable = JSON.stringify(TableData);
+
+
 
 hash = function (str) {
   var hash = 0;
@@ -202,15 +215,26 @@ hash = function (str) {
 console.log($.cookie('nextsonghash'));
 console.log(String(hash(stringTable)));
 
-
+var socket = io('http://185.65.245.45:7080');
 if($.cookie('nextsonghash') !== String(hash(stringTable))) {
   console.log(1);
   $.cookie('nextsonghash', String(hash(stringTable)));
-  var socket = io('http://185.65.245.45:7080');
  
   socket.on('getList', function (data) {
     socket.emit('playlist', stringTable);
   });  
+}
+
+
+  socket.emit('songchanged', stringTableCur);
+
+
+if($.cookie('nextsonghashCur') !== String(hash(stringTableCur))) {
+  console.log('Cur');
+  $.cookie('nextsonghashCur', String(hash(stringTableCur)));
+ 
+
+
 }
 
       </script>
