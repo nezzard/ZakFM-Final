@@ -5,7 +5,7 @@
 require_once('parser.php');
 //require_once('socket.php');
 
-wp_enqueue_script( 'wp-api' );
+
 
 
 
@@ -213,7 +213,5 @@ function ah_get_weights() {
 
 
 
-wp_enqueue_script( 'my-ajax-request', get_template_directory_uri() . '/js/init.js' );
-wp_localize_script( 'my-ajax-request', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 ?>

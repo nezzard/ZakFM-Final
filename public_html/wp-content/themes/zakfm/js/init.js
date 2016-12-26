@@ -1,4 +1,4 @@
-/*var option = {
+var option = {
     element: document.getElementById('player1'),                       // Optional, player element
     narrow: false,                                                     // Optional, narrow style
     autoplay: false,                                                    // Optional, autoplay song(s), not supported by mobile browsers

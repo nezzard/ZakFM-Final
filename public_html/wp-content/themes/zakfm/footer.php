@@ -30,18 +30,52 @@
         $(document).pjax('header', '.wrap-in')
     </script>
 
-    <script src="<?php bloginfo('template_url'); ?>/js/boots.min.js"  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
     <!-- bxSlider Javascript file -->
 	<script src="<?php bloginfo('template_url'); ?>/js/jquery.bxslider.min.js" ></script>
     
     <script src="http://cdn.bootcss.com/aplayer/1.5.8/APlayer.min.js"></script>
 	
-    
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <iframe src=""></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
     <?php wp_footer(); ?>
+    <script src="<?php bloginfo('template_url'); ?>/js/boots.min.js"></script>
+    <link href="<?php bloginfo('template_url'); ?>/css/boots.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script>
+        jQuery('body').on('click', '.one-song-thumb', function() {
+
+        console.log(1);
+        var src = 'http://www.youtube.com/v/'+$(this).data('youtube')+'&amp;autoplay=1';
+        $('#myModal').modal('show');
+        $('#myModal iframe').attr('src', src);
+    });
+
+    $('#myModal button').click(function () {
+        $('#myModal iframe').removeAttr('src');
+    });
+</script>
 
 </body>
                                   
