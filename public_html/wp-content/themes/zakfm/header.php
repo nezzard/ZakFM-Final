@@ -11,18 +11,19 @@
     <title><?php bloginfo('name'); ?></title>
 <script>
   var socket = io('http://zakarpattyafm.com.ua:7080');
-  socket.emit('ttt', 111);
   socket.emit('seyGet');
   socket.on('changed', function(changed){
     var image = changed.image;
 
-    changed = JSON.parse(changed.changed)[0];
+    changed = changed['changed'];
+
     jQuery('.aplayer-title').html(changed.song);
     jQuery('.aplayer-author').html('- '+changed.artist);
     jQuery('.aplayer-pic').css('background-image', 'url('+image+')');
   })
   socket.on('sendSongg', function (data) {
     console.log(data);
+    jQuery('.all-songs').html();
     loadPlay(data);
   });
 

@@ -64,7 +64,7 @@
 
 
     <script>
-        jQuery('body').on('click', '.one-song-thumb', function() {
+        jQuery('body').on('click', '.one-song-thumb, .show-video a, .one-song-tit a', function() {
 
         console.log(1);
         var src = 'http://www.youtube.com/v/'+$(this).data('youtube')+'&amp;autoplay=1';

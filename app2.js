@@ -23,26 +23,52 @@ wp.song = wp.registerRoute('wp/v2', '/song/(?P<id>\\d+)', {
    methods: [ 'GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 });
 
+wp.arch = wp.registerRoute('wp/v2', '/arch', {
+   methods: [ 'GET', 'POST', 'PUT', 'PATCH', 'DELETE']
+});
 
 
-var tt;
 io.on('connection', function (socket) {
-
+ 	
 	socket.on('songchanged', function(changed){
-rp("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+encodeURIComponent(changed[0]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json")
+var songdata = JSON.parse(changed);
+		rp("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+encodeURIComponent(songdata[0]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json")
     .then(function (htmlString) {
-    var image = JSON.parse(htmlString).artist['image'][2]['#text'];
-      		socket.broadcast.emit('changed', {"image": image, "changed": changed});
+    	var image = JSON.parse(htmlString).artist['image'][2]['#text'];
+      socket.broadcast.emit('changed', {"image": image, "changed": songdata[0]});
+      
+      
+      if(songdata[0]['changed'] === true){
+      	
+					wp.song().search( songdata[0]['artist']+' - '+songdata[0]['song'] ).then(function( posts ) {
+				      wp.arch().create({
+				      	songid: posts[0].id
+				      }).then(function(er){
+				      	console.log(er);	      	
+				      }).catch(function(e){
 
+				      	
+				      })
+					}).catch(function(e){
+						console.log('Не найдено ');
+					})      	
+				}else {
+					console.log('nothing');
+				}
+
+
+
+
+      console.log('end');
     })
     .catch(function (err) {
         // Crawling failed...
     });
 
-
-
-
 	});
+	
+
+	
 
 		
 
@@ -55,30 +81,30 @@ rp("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+encodeURICo
     
 
 
-
   function writet(myJson){
 		fs.writeFile( "filename.json", JSON.stringify( myJson ), "utf8" );
 		console.log('11111111111111111111111111');
-		//console.log(myJson);
+
 
   }
 var myJson = new Array();
+
+
 
 for(var i = 0; i <= result.length-1;  ) {
 
 
 
-
   function test(i) {
   setTimeout(function(){
-  	//console.log(result[i]);
+  	console.log(result[i]);
 
   		wp.song().search( result[i]['artist']).then(function( posts ) {
 
 					return posts[0]['featured_media'];
   		}).then(function(data){  			
 		  	wp.song().search( result[i]['artist']+' - '+result[i]['song'] ).then(function( posts ) {
-		  				console.log(data);
+		  				console.log(data+"1");
 
 
 							if(!posts[0]){
@@ -124,7 +150,7 @@ for(var i = 0; i <= result.length-1;  ) {
 			  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
 			  					
 			  						myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
-			  				
+
 
 			  				})
 
@@ -228,10 +254,11 @@ for(var i = 0; i <= result.length-1;  ) {
 					})
 
 			  })
-			  .catch(/* handle error */);			});
+			  .catch(/* handle error */);			
+
+			});
 	
-	
-		
+
 
 
   }, 2000 * i);

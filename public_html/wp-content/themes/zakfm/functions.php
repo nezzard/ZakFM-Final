@@ -82,19 +82,29 @@ function song_post_type() {
 add_action( 'init', 'song_post_type', 0 );
 
 
+
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'wp/v2', '/arch', array(
+		'methods' => 'POST',
+		'callback' => 'my_awesome_funсc',
+
+	) );
+} );
+
+
+
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'wp/v2', '/next/(?P<id>\d+)/(?P<ordernum>\d+)', array(
 		'methods' => 'POST',
 		'callback' => 'my_awesome_func',
 	) );
 } );
-function my_awesome_func($data){
+function my_awesome_funсc($data){
 
 
 		global $wpdb;
-		return $wpdb->insert("wp_nextplay", array(
-		   "song_id" => $data['id'],
-		   "order_num" => $data['ordernum']
+		return $wpdb->insert("wp_playlistarch", array(
+		   "song_id" => $data['songid'],
 		));
 
 }
@@ -103,6 +113,9 @@ function my_awesome_func($data){
 
 add_action( 'rest_api_init', 'slug_register_spaceship' );
 function slug_register_spaceship() { 
+
+
+
     register_rest_field( 'song',
         'youtube',
         array(
@@ -153,6 +166,12 @@ function slug_register_spaceship() {
 
 
 
+}
+
+
+
+function test( $data ) {
+    return 1;
 }
 
 function slug_get_spaceship( $object, $field_name, $request ) {
