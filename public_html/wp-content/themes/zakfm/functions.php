@@ -58,7 +58,7 @@ function song_post_type() {
 		'label'                 => __( 'Пісня', 'text_domain' ),
 		'description'           => __( 'Перелік всіх пісень', 'text_domain' ),
 		'labels'                => $labels,
-		'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'trackbacks', 'revisions', 'custom-fields', 'page-attributes', 'post-formats', ),
+		'supports'              => array( 'title', 'editor', 'excerpt', 'thumbnail', 'comments', 'trackbacks', 'custom-fields', 'page-attributes'),
 		'taxonomies'            => array( 'post_tag' ),
 		'hierarchical'          => false,
 		'public'                => true,
@@ -206,6 +206,36 @@ function slug_update_playarch( $value ) {
 
 
 
+
+add_action( 'transition_post_status', function ( $new_status, $old_status, $post )
+{
+
+    if( 'publish' == $new_status && 'publish' != $old_status && $post->post_type == 'song' ) {
+
+function true_unset_image_sizes( $sizes) {
+    unset( $sizes['thumbnail']); // миниатюра
+    unset( $sizes['medium']); // средний
+    unset( $sizes['large']); // большой
+    return $sizes;
+}
+ 
+add_filter('intermediate_image_sizes_advanced', 'true_unset_image_sizes');
+    }
+}, 10, 3 );
+
+
+
+
+
+function register_my_menus() {
+  register_nav_menus(
+    array(
+      'header-menu' => __( 'Верхнє меню' ),
+      'fotter-menu' => __( 'Нижнє меню' )
+    )
+  );
+}
+add_action( 'init', 'register_my_menus' );
 
 /*
 

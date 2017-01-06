@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
+
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,19 +13,23 @@
     <title><?php bloginfo('name'); ?></title>
 <script>
   var socket = io('http://zakarpattyafm.com.ua:7080');
+
+
+
+
+
   socket.emit('seyGet');
   socket.on('changed', function(changed){
     var image = changed.image;
-
+    console.log(image);
     changed = changed['changed'];
-
     jQuery('.aplayer-title').html(changed.song);
     jQuery('.aplayer-author').html('- '+changed.artist);
     jQuery('.aplayer-pic').css('background-image', 'url('+image+')');
   })
   socket.on('sendSongg', function (data) {
-    console.log(data);
-    jQuery('.all-songs').html();
+    //console.log(data);
+    jQuery('.all-songs').html('');
     loadPlay(data);
   });
 
@@ -41,7 +47,7 @@ data.sort(function(a, b) {
 
 
 jQuery.each( data, function( key, value ) {
-    console.log(value);
+    //console.log(value);
     var img;
     if(value.end){
         img = value.end;
@@ -71,6 +77,10 @@ jQuery.each( data, function( key, value ) {
 
 
     ?>
+
+
+
+
 </head>
 
 <body>
@@ -94,16 +104,21 @@ jQuery.each( data, function( key, value ) {
                     <span></span>
                     <span></span>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a class="active" href="#">Головна</a></li>
-                        <li><a href="#">Новини</a></li>
-                        <li><a href="#">Пошта привітань</a></li>
-                        <li><a href="#">Архів пісень</a></li>
-                        <li><a href="#">Реклама</a></li>
-                        <li><a href="#">Контакти</a></li>
-                    </ul>
-                </nav>
+
+                <?php
+
+
+                wp_nav_menu( array(
+                    'theme_location'  => 'header-menu',
+                    'container'       => 'nav', 
+                    'menu_class'      => 'menu', 
+                    'echo'            => true,
+                    'fallback_cb'     => 'wp_page_menu',
+                    'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                    'depth'           => 0,
+                ) );
+                ?>
+
             </div>
             
         </header>

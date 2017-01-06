@@ -16,9 +16,9 @@
   })(); </script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
 
-      <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
-      <script src="js/jquery.cache.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -63,7 +63,7 @@
 
   <tr> 
     <td> 
-      <div align="center"><b><font FACE="Play" size="-2" color="#adadad">100</font></b></div>
+      <div align="center"><b><font FACE="Play" size="-2" color="#adadad">1</font></b></div>
     </td>
     <td> 
       <div align="center"><font FACE="Play" size="-2" color="#adadad"><b>В твоей голове</b></font></div>
@@ -163,19 +163,17 @@
 
 
 
-      <script type="text/javascript">
-
+<script type="text/javascript">
 
 var TableDataCur = new Array();    
 $('#table1 tr').each(function(row, tr){
-      if(row > 0 ){
+    if(row > 0 ){
       TableDataCur[row]={
-
-          "song" :$(tr).find('td:eq(0) b').text()
-          , "artist" : $(tr).find('td:eq(1) b').text()
-        }
-        }     
-   
+        "song" :$(tr).find('td:eq(0) b').text()
+        ,"artist" : $(tr).find('td:eq(1) b').text(),
+        "changed" : false
+      }
+    }   
 }); 
 TableDataCur.shift(); 
 stringTableCur = JSON.stringify(TableDataCur);
@@ -227,28 +225,19 @@ if($.cookie('nextsonghash') !== String(hash(stringTable))) {
 
 
 
-
-
 if($.cookie('nextsonghashCur') !== String(hash(stringTableCur))) {
   console.log('Cur');
   $.cookie('nextsonghashCur', String(hash(stringTableCur)));
 
-  var obj = {};
-  TableDataCur['key'] = true;
-  obj.push(TableDataCur);
-    console.log(obj);
-  var obj = new Array();
-  TableDataCur['key'] = true;
-  obj.push(TableDataCur);
+  TableDataCur[0].changed = true;
+  console.log(TableDataCur);
   stringTablet = JSON.stringify(TableDataCur);
     console.log(stringTablet);
 
   socket.emit('songchanged', stringTablet); 
-
-
 }
 else {
-    socket.emit('songchanged', stringTableCur);
+  socket.emit('songchanged', stringTableCur);
 }
 
-      </script>
+</script>

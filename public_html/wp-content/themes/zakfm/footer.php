@@ -3,16 +3,21 @@
             <div class="copy">
                 © 2016 artpixel.com.ua
             </div>
-            <div class="foot-menu">
-                <ul>
-                    <li><a href="#">Головна</a></li>
-                    <li><a href="#">Новини</a></li>
-                    <li><a href="#">Пошта привітань</a></li>
-                    <li><a href="#">Архів пісень</a></li>
-                    <li><a href="#">Реклама</a></li>
-                    <li><a href="#">Контакти</a></li>
-                </ul>
-            </div>
+
+
+                <?php
+                wp_nav_menu( array(
+                    'theme_location'  => 'header-menu',
+                    'container'       => 'div', 
+                    'container_class' => 'foot-menu', 
+                    'echo'            => true,
+                    'fallback_cb'     => 'wp_page_menu',
+                    'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                    'depth'           => 0,
+                ) );
+                ?>
+
+
         </footer>
         <!-- Конец Подвал -->
 	</div>
@@ -61,12 +66,12 @@
     <?php wp_footer(); ?>
     <script src="<?php bloginfo('template_url'); ?>/js/boots.min.js"></script>
     <link href="<?php bloginfo('template_url'); ?>/css/boots.min.css" rel="stylesheet" type="text/css" />
+    <script src="<?php bloginfo('template_url'); ?>/js/jquery.cache.js"></script>
 
 
     <script>
         jQuery('body').on('click', '.one-song-thumb, .show-video a, .one-song-tit a', function() {
 
-        console.log(1);
         var src = 'http://www.youtube.com/v/'+$(this).data('youtube')+'&amp;autoplay=1';
         $('#myModal').modal('show');
         $('#myModal iframe').attr('src', src);
@@ -75,6 +80,43 @@
     $('#myModal button').click(function () {
         $('#myModal iframe').removeAttr('src');
     });
+
+
+  $('#join').click(function(){
+    var name = $('#name').val();
+    if (name != '') {
+      socket.emit('join', name);
+      $('#login').detach();
+      $('#chat').show();
+      $('#msg').focus();
+      ready = true;
+      $.cookie('chatZakName', name);
+
+    }
+  });
+
+  if($.cookie('chatZakName')){
+    socket.emit('join', $.cookie('chatZakName'));
+    ready = true;
+  }
+
+  $('#send').click(function(){
+    if(ready) {
+    var msg = $('#msg').val();
+    socket.emit('send', msg);
+    $('#msg').val('');
+
+}
+  });
+
+
+    socket.on('chat', function(who, msg){
+    console.log(who);
+    if(ready) {
+      $('#msgs').append('<li>' + who + ' написал: ' + msg + '</li>');
+    }
+  });
+
 </script>
 
 </body>

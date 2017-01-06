@@ -8,53 +8,7 @@ get_header(); ?>
             <!-- Основная часть -->
             <main class="main">
             
-            	<!-- Сайдбар -->
-                <aside class="aside">
-                	<div class="one-widget">
-                    	<h3 class="wrap-tit">
-                        	Наступні композиції
-                        </h3>
-                        <div class="will-play">
-                        	<div class="all-songs">
-
-                                
-
-                                
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="one-widget">
-                    	<div class="social">
-                        	<a href="#">
-                            	<img src="<?php bloginfo('template_url'); ?>/images/facebook.png" alt=" " />
-                            </a>
-                            <a href="#">
-                            	<img src="<?php bloginfo('template_url'); ?>/images/google-plus.png" alt=" " />
-                            </a>
-                            <a href="#">
-                            	<img src="<?php bloginfo('template_url'); ?>/images/vk.png" alt=" " />
-                            </a>
-                            <a href="#">
-                            	<img src="<?php bloginfo('template_url'); ?>/images/facebook.png" alt=" " />
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="one-widget rekl">
-                    	<a href="#">
-                        	<img src="http://placehold.it/290x220">
-                        </a>
-                    </div>
-                    
-                    <div class="one-widget chat">
-                    	<a href="#">
-                        	<img src="<?php bloginfo('template_url'); ?>/images/chat.jpg">
-                        </a>
-                    </div>
-                    
-                </aside>
-                <!-- Конец Сайдбар -->
+                <?php get_sidebar(); ?>
             
             	<!-- Левая часть -->
                 <div class="cont">
@@ -256,7 +210,7 @@ get_header(); ?>
                     	<h3 class="wrap-tit">
                         	Лунало в ефірі
                         </h3>
-                        <div class="all-songs">
+                        <div class="all-songss">
                             <div class="one-song">
                             	<div class="one-song-in">
                                     <a href="#" class="one-song-thumb">
