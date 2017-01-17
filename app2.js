@@ -151,8 +151,9 @@ var people = {};
 
 
 io.on('connection', function (socket) {
- 
+
   socket.on('join', function(name){
+  	socket.join('chat');
     people[socket.id] = name;
     console.log(people[socket.id]);
 
@@ -271,8 +272,9 @@ for(var i = 0; i <= result.length-1;  ) {
 			   /UNKNOWN/.test(String(result[i]['artist'])) === false &&
 			   /UNKNOWN/.test(String(result[i]['song'])) === false){
 
-				console.log(123);	
+				let songArray = new Array ({'artist': result[i]['artist'], 'song': result[i]['song']});
 				//postSong(songArray);
+				console.log(songArray);
 				/*
   				wp.song().search( result[i]['artist']).then(function( posts ) {
   				//Берем миниатюру из первого поста, если артист найден

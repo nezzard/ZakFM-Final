@@ -66,6 +66,9 @@ get_header(); ?>
                         </div>
                     </div>
                     <!-- Конец Слайдер -->
+
+                    <!-- Блок рекламы под слайдером -->
+                    <a href="#" class="ads" target="_blank"><img src="http://placehold.it/670x120"></a>
                     
                     <!-- Останні новини -->
                     <div class="last-news">
@@ -166,6 +169,8 @@ get_header(); ?>
                         </div>
                         
                     </div>
+                    <!-- Блок рекламы под архивом -->
+                    <a href="#" class="ads" target="_blank"><img src="http://placehold.it/670x120"></a>
                     <!-- Конец Останні пісні -->
                     
                 </div>

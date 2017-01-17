@@ -27,7 +27,7 @@
   <script src="<?php bloginfo('template_url'); ?>/js/jquery.pjax.js"></script> 
 
     <script>
-        $(document).pjax('.pjax, .menu-item a, .wp-pagenavi a', '.cont', {fragment: '.cont', maxCacheLength: 1000000, timeout: 0});
+       // $(document).pjax('.pjax, .menu-item a, .wp-pagenavi a', '.cont', {fragment: '.cont', maxCacheLength: 1000000, timeout: 0});
 
         
     </script>
@@ -148,8 +148,12 @@ $('#datepicker').datepicker({
      "setDate": new Date(),
 
 });
-  
-})
+
+});
+
+
+
+
 
   </script>
 
@@ -192,8 +196,12 @@ $('#datepicker').datepicker({
 $('#myModal').on('hidden.bs.modal', function (e) {
 $('#myModal iframe').removeAttr('src');
 })
-
-
+  
+  socket.on('clientsInChat', function(count){
+    console.log(1);
+    console.log(count);
+  });
+  
   $('#join').click(function(){
     var name = $('#name').val();
     if (name != '') {
@@ -208,7 +216,7 @@ $('#myModal iframe').removeAttr('src');
   });
 
   if($.cookie('chatZakName')){
-    socket.emit('join', $.cookie('chatZakName'));
+   // socket.emit('join', $.cookie('chatZakName'));
     $('#login').css("display", "none");
     $('#chat').css("display", "block");
     ready = true;
@@ -218,20 +226,29 @@ $('#myModal iframe').removeAttr('src');
 
   $('#send').click(function(){
     if(ready) {
-    var msg = $('#msg').val();
-    socket.emit('send', msg);
-    $('#msg').val('');
-
-}
+      var msg = $('#msg').val();
+      socket.emit('send', msg);
+      $('#msg').val('');
+    }
   });
 
-
+  $('.form-inline').submit(function(e) {
+    e.preventDefault();
+      if(ready) {
+      var msg = $('#msg').val();
+      socket.emit('send', msg);
+      $('#msg').val('');
+    }
+  });
 
 
     socket.on('chat', function(who, msg){
     console.log(who);
     if(ready) {
       $('#msgs').append('<li><b>' + who + ' написал:</b> ' + msg + '</li>');
+
+    var objDiv = document.getElementById("msgs");
+objDiv.scrollTop = objDiv.scrollHeight;
     }
   });
 
