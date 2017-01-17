@@ -38,31 +38,51 @@
                     </div>
                     
                     <div class="one-widget chat">
+                      <div class="chat-tit">
+                        Чат
+                      </div>
+                      <div class="body-chat">
+                          <div class="avat-user">
+                              <div class="avat-thumb">
+                              <img src="<?php bloginfo('template_url'); ?>/images/rad.png" alt=" " />
+                              </div>
+                              <div class="avat-name">
+                                  <div class="avat-name-in">
+                                  Закарпаття ФМ
+                                  <span>
+                                  Онлайн чат (104 учасника)
+                                  </span>
+                                </div>
+                              </div>
+                          </div>
 
-    <div class="row">
-      <div class="span2">
-        <ul id="people" class="unstyled"></ul>
-      </div>
-      <div class="span4">
-        <ul id="msgs" class="unstyled">
-      </div>
-    </div>
-                    
-    <div class="row">
-      <div class="span5 offset2" id="login">
-        <form class="form-inline">
-          <input type="text" class="input-small" placeholder="Ваше имя" id="name">
-          <input type="button" name="join" id="join" value="Присоединиться" class="btn btn-primary">
-        </form>
-      </div>
+                          <div class="row">
+                            <div class="span2">
+                              <ul id="people" class="unstyled"></ul>
+                            </div>
+                            <div class="span4">
+                              <ul id="msgs" class="unstyled"></ul>
+                            </div>
+                          </div>
 
-      <div class="span5 offset2" id="chat">
-        <form id="2" class="form-inline">
-          <input type="text" class="input" placeholder="Ваше сообщение" id="msg">
-          <input type="button" name="send" id="send" value="Отправить" class="btn btn-success">
-        </form>
-      </div>
-    </div>
+                          <div class="send-form">
+                            <div class="row">
+                              <div class="span5 offset2" id="login">
+                                <form class="form-inline">
+                                  <input type="text" class="input-small chat-inp" placeholder="Ваше имя" id="name">
+                                  <input type="button" name="join" id="join" value="Присоединиться" class="btn-ok">
+                                </form>
+                              </div>
+
+                              <div class="span5 offset2" id="chat">
+                                <form id="2" class="form-inline">
+                                  <input type="text" class="input chat-inp" placeholder="Ваше сообщение" id="msg">
+                                  <input type="button" name="send" id="send" value="Отправить" class="btn-ok">
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
    
                     </div>
                     

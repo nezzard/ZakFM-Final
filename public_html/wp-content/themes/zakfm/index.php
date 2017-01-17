@@ -1,6 +1,5 @@
 <?php 
 
-
 get_header(); ?>
         
     	<div class="wrap-in">
@@ -15,58 +14,55 @@ get_header(); ?>
                 	<!-- Слайдер -->
                     <div class="slider">
                         <div class="bxslider">
+
+                        <?php
+                        $the_query = new WP_Query( array( 'post_type' => 'slider', 'posts_per_page' => 4 ) );
+                        ?>
+                        <?php if ( $the_query->have_posts() ) : ?>
+                            <?php while ( $the_query->have_posts() ) : $the_query->the_post(); 
+
+                            if(get_field('вставити_запис') == true){
+                                $id = get_field('вставлений_запис')->ID; ?>
+
+                                <div class="one-slide">
+                                    <a href="#" class="pjax">
+                                    <?php echo get_the_post_thumbnail( $id, 'homepage-thumb-slide' ); ?>
+                                    
+                                    </a>
+                                    <div class="slide-descr">
+                                        <div class="slide-tit">
+                                            <a href="<?php the_permalink($id); ?>" class="pjax"><?php echo get_field('вставлений_запис')->post_title; ?></a>
+                                        </div>
+                                        <p>
+                                            <?php echo mb_substr( strip_tags(  get_field('вставлений_запис')->post_content), 0, 70 ); ?>...
+                                        </p>
+                                    </div>
+                                </div>
+                            <?php } else { ?>     
+
                             <div class="one-slide">
-                            	<a href="#">
-                                	<img src="<?php bloginfo('template_url'); ?>/images/slide.jpg" width="670" height="375" alt=" " />
+                            	<a href="#" class="pjax">
+                                <?php $image = wp_get_attachment_image_src( get_field('зображення_слайду'), 'homepage-thumb-slide'); ?>
+                                
+                                	<img src="<?php echo $image[0]; ?>" width="670" height="375" alt=" " />
                                 </a>
                                 <div class="slide-descr">
                                     <div class="slide-tit">
-                                        <a href="#">Сьогодні в гостях гурт ROKASH</a>
+                                        <a href="<?php the_permalink(); ?>" class="pjax"><?php the_title(); ?></a>
                                     </div>
                                     <p>
-                                        Поговоримо про новий альбом гурту та дізнаємося всі подробиці про новий кліп 
+                                        <?php echo mb_substr( strip_tags( get_field('опис_слайду')), 0, 70 ); ?>...
                                     </p>
                                 </div>
                             </div>
-                            <div class="one-slide">
-                                <a href="#">
-                                	<img src="<?php bloginfo('template_url'); ?>/images/slide.jpg" width="670" height="375"  alt=" " />
-                                </a>
-                                <div class="slide-descr">
-                                    <div class="slide-tit">
-                                        <a href="#">Сьогодні в гостях гурт ROKASH</a>
-                                    </div>
-                                    <p>
-                                        Поговоримо про новий альбом гурту та дізнаємося всі подробиці про новий кліп 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="one-slide">
-                                <a href="#">
-                                	<img src="<?php bloginfo('template_url'); ?>/images/slide.jpg" width="670" height="375"  alt=" " />
-                                </a>
-                                <div class="slide-descr">
-                                    <div class="slide-tit">
-                                        <a href="#">Сьогодні в гостях гурт ROKASH</a>
-                                    </div>
-                                    <p>
-                                        Поговоримо про новий альбом гурту та дізнаємося всі подробиці про новий кліп 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="one-slide">
-                                <a href="#">
-                                	<img src="<?php bloginfo('template_url'); ?>/images/slide.jpg" width="670" height="375"  alt=" " />
-                                </a>
-                                <div class="slide-descr">
-                                    <div class="slide-tit">
-                                        <a href="#">Сьогодні в гостях гурт ROKASH</a>
-                                    </div>
-                                    <p>
-                                        Поговоримо про новий альбом гурту та дізнаємося всі подробиці про новий кліп 
-                                    </p>
-                                </div>
-                            </div>
+                            <?php } ?>
+                            <?php endwhile; ?>
+                            <?php wp_reset_postdata(); ?>
+
+                        <?php else : ?>
+                            <p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+                        <?php endif; ?>
+
                         </div>
                     </div>
                     <!-- Конец Слайдер -->
@@ -76,127 +72,76 @@ get_header(); ?>
                     	<h3 class="wrap-tit">
                         	Останні новини
                         </h3>
-                        <div class="left-news">
-                        	<div class="left-news-thumb">
-                            	<a href="#">
-                                	<img src="<?php bloginfo('template_url'); ?>/images/big-news.jpg" alt=" " />
-                                </a>
-                            </div>
-                            <div class="left-news-tit">
-                                <a href="#">
-                                    Подробиці ацкії до дня народження
-                                </a>
-                            </div>
-                            <p>
-                                На честь дня народження Закарпаття ФМ ми підготували цілу купу подарунків,
-                                переможця будемо обирати через сервіс random.org
-                            </p>
-                            <div class="one-news-info">
-                                <div class="news-data">
-                                    Сьогодні |
+                        <?php                         
+                        $the_query = new WP_Query( array( 'category__in' => 4, 'posts_per_page' => 1 ) );
+                        ?>
+                        <?php if ( $the_query->have_posts() ) : ?>
+                            <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>                        
+                            <div class="left-news">
+                            	<div class="left-news-thumb">
+                                	<a href="#" class="pjax">
+                                        <?php  the_post_thumbnail('homepage-thumb'); ?>
+                                    </a>
                                 </div>
-                                <div class="news-author">
-                                    Ведучий(а) Маша Кудря
+                                <div class="left-news-tit">
+                                    <a href="<?php the_permalink(); ?>" class="pjax">
+                                        <?php the_title(); ?>
+                                    </a>
+                                </div>
+                                <p>
+                                    <?php echo mb_substr( strip_tags( get_the_content()), 0, 152 ); ?>...
+                                </p>
+                                <div class="one-news-info">
+                                    <div class="news-data">
+                                        <?php the_time("j F") ;?> |
+                                    </div>
+                                    <div class="news-author">
+                                        Ведучий(а) <a href="<?php echo esc_url( get_author_posts_url( $authordata->ID, $authordata->user_nicename ) ); ?>" class="pjax"><?php the_author_meta('first_name'); ?> <?php the_author_meta('last_name'); ?></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <?php endwhile; ?>
+                            <?php wp_reset_postdata(); ?>
+
+                        <?php else : ?>
+                            <p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+                        <?php endif; ?>
+
                         <div class="right-news">
-                        	<div class="one-news">
-                            	<div class="one-news-thumb">
-                                	<a href="#">
-                                    	<img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-1.jpg">
-                                    </a>
-                                </div>
-                                <div class="one-news-descr">
-                                	<a href="#">
-                                    	<b>
-                                        	Сьогодні в студії свято
-                                        </b>
-                                        не пропустіть в прямому ефірі
-                                    </a>
-                                    <div class="one-news-info">
-                                    	<div class="news-data">
-                                        	24 грудня |
-                                        </div>
-                                        <div class="news-author">
-                                        	Ведучий(а) Маша Кудря
+                            <?php                         
+                            $the_query = new WP_Query( array( 'category__in' => 4, 'posts_per_page' => 5, 'offset' => 1 ) );
+                            ?>
+                            <?php if ( $the_query->have_posts() ) : ?>
+                                <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+                                <div class="one-news">
+                                    <div class="one-news-thumb">
+                                        <a href="<?php echo esc_url( get_author_posts_url( $authordata->ID, $authordata->user_nicename ) ); ?>" class="pjax">
+                                            <?php echo get_avatar( get_the_author_meta('user_email'), 50 ); ?>
+                                        </a>
+                                    </div>
+                                    <div class="one-news-descr">
+                                        <a href="<?php the_permalink(); ?>" class="pjax "><b><?php the_title(); ?></b></a>
+                                        <div class="one-news-info">
+                                            <div class="news-data">
+                                                <?php the_time("j F") ;?> |
+                                            </div>
+                                            <div class="news-author">
+                                                Ведучий(а) <a href="<?php echo esc_url( get_author_posts_url( $authordata->ID, $authordata->user_nicename ) ); ?>" class="pjax"><?php the_author_meta('first_name'); ?> <?php the_author_meta('last_name'); ?></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="one-news">
-                            	<div class="one-news-thumb">
-                                	<a href="#">
-                                    	<img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-2.jpg">
-                                    </a>
-                                </div>
-                                <div class="one-news-descr">
-                                	<a href="#">
-                                    	<b>
-                                        	Новий рік з Нами
-                                        </b>
-                                        вигравай  2 білети
-                                    </a>
-                                    <div class="one-news-info">
-                                    	<div class="news-data">
-                                        	24 грудня |
-                                        </div>
-                                        <div class="news-author">
-                                        	Ведучий(а) Маша Кудря
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="one-news">
-                            	<div class="one-news-thumb">
-                                	<a href="#">
-                                    	<img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-3.jpg">
-                                    </a>
-                                </div>
-                                <div class="one-news-descr">
-                                	<a href="#">
-                                    	<b>
-                                        	Поговоримо про "Пересічки"
-                                        </b>
-                                        проблема яка турбує багатьох
-                                    </a>
-                                    <div class="one-news-info">
-                                    	<div class="news-data">
-                                        	24 грудня |
-                                        </div>
-                                        <div class="news-author">
-                                        	Ведучий(а) Маша Кудря
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="one-news">
-                            	<div class="one-news-thumb">
-                                	<a href="#">
-                                    	<img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-1.jpg">
-                                    </a>
-                                </div>
-                                <div class="one-news-descr">
-                                	<a href="#">
-                                    	<b>
-                                        	Приймає привітання до дня міста
-                                        </b>
-                                        отримуй приз за найкраще привітання
-                                    </a>
-                                    <div class="one-news-info">
-                                    	<div class="news-data">
-                                        	24 грудня |
-                                        </div>
-                                        <div class="news-author">
-                                        	Ведучий(а) Маша Кудря
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php endwhile; ?>
+                                <?php wp_reset_postdata(); ?>
+
+                            <?php else : ?>
+                                <p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+                            <?php endif; ?>
+
+
                             
                             <div class="all-news">
-                            	<a href="#">
+                            	<a href="<?php echo get_category_link(4); ?>" class="pjax">
                                 	Всі новини
                                 </a>
                             </div>
@@ -207,172 +152,16 @@ get_header(); ?>
                     
                     <!-- Останні пісні -->
                     <div class="last-song">
-                    	<h3 class="wrap-tit">
-                        	Лунало в ефірі
-                        </h3>
-                        <div class="all-songss">
-                            <div class="one-song">
-                            	<div class="one-song-in">
-                                    <a href="#" class="one-song-thumb">
-                                        <img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-4.jpg">
-                                    </a>
-                                    <div class="one-song-descr">
-                                        <div class="one-song-tit">
-                                            <a href="#">
-                                                <b>
-                                                    Макс Барских
-                                                </b>
-                                                - Аномалия
-                                            </a>
-                                        </div>
-                                        <div class="one-song-time">
-                                            Прозвучала: 19:45
-                                        </div>
-                                        <div class="show-video">
-                                            <a href="#">
-                                                Переглянути відео
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="one-song">
-                            	<div class="one-song-in">
-                                    <a href="#" class="one-song-thumb">
-                                        <img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-5.jpg">
-                                    </a>
-                                    <div class="one-song-descr">
-                                        <div class="one-song-tit">
-                                            <a href="#">
-                                                <b>
-                                                    Настя і Потап
-                                                </b>
-                                                - Мама
-                                            </a>
-                                        </div>
-                                        <div class="one-song-time">
-                                            Прозвучала: 18:45
-                                        </div>
-                                        <div class="show-video">
-                                            <a href="#">
-                                                Переглянути відео
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="one-song">
-                            	<div class="one-song-in">
-                                    <a href="#" class="one-song-thumb">
-                                        <img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-6.jpg">
-                                    </a>
-                                    <div class="one-song-descr">
-                                        <div class="one-song-tit">
-                                            <a href="#">
-                                                <b>
-                                                    Софія Ротару
-                                                </b>
-                                                - Калина
-                                            </a>
-                                        </div>
-                                        <div class="one-song-time">
-                                            Прозвучала: 18:35
-                                        </div>
-                                        <div class="show-video">
-                                            <a href="#">
-                                                Переглянути відео
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="one-song">
-                            	<div class="one-song-in">
-                                    <a href="#" class="one-song-thumb">
-                                        <img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-7.jpg">
-                                    </a>
-                                    <div class="one-song-descr">
-                                        <div class="one-song-tit">
-                                            <a href="#">
-                                                <b>
-                                                    Океан Ельзи
-                                                </b>
-                                                - 911
-                                            </a>
-                                        </div>
-                                        <div class="one-song-time">
-                                            Прозвучала: 18:28
-                                        </div>
-                                        <div class="show-video">
-                                            <a href="#">
-                                                Переглянути відео
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="one-song">
-                            	<div class="one-song-in">
-                                    <a href="#" class="one-song-thumb">
-                                        <img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-8.jpg">
-                                    </a>
-                                    <div class="one-song-descr">
-                                        <div class="one-song-tit">
-                                            <a href="#">
-                                                <b>
-                                                    Modern talking
-                                                </b>
-                                                - cheri cheri lady
-                                            </a>
-                                        </div>
-                                        <div class="one-song-time">
-                                            Прозвучала: 18:00
-                                        </div>
-                                        <div class="show-video">
-                                            <a href="#">
-                                                Переглянути відео
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="one-song">
-                            	<div class="one-song-in">
-                                    <a href="#" class="one-song-thumb">
-                                        <img src="<?php bloginfo('template_url'); ?>/images/avat/thumb-9.jpg">
-                                    </a>
-                                    <div class="one-song-descr">
-                                        <div class="one-song-tit">
-                                            <a href="#">
-                                                <b>
-                                                    Ані Лорак
-                                                </b>
-                                                - Солнце
-                                            </a>
-                                        </div>
-                                        <div class="one-song-time">
-                                            Прозвучала: 17:55
-                                        </div>
-                                        <div class="show-video">
-                                            <a href="#">
-                                                Переглянути відео
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                        <?php last_song(); ?>
+
                         
-                        </div>
+                      
                         
                         <div class="all-vid">
-                        	<a href="#">
-                            	<span></span>
-                            	<i>Переглянути архів</i>
+                            <a href="/archive/" class="pjax">
+                                <span></span>
+                                <i>Переглянути архів</i>
                             </a>
                         </div>
                         

@@ -13,10 +13,10 @@
     if(isset($_POST["clearDate"])){
         $_POST = array();
     }
-    if(isset($_GET["sortDate"])){
-       $song_ids =  $wpdb->get_results('SELECT * FROM wp_playlistarch WHERE date LIKE "'.$_GET["sortDate"].'%" ORDER BY date DESC ');
+    if(isset($_POST["sortDate"])){
+       $song_ids =  $wpdb->get_results('SELECT * FROM wp_playlistarch WHERE date LIKE "'.$_POST["sortDate"].'%" ORDER BY date DESC ');
     }else {
-       $song_ids =  $wpdb->get_results('SELECT * FROM wp_playlistarch WHERE date LIKE "'.date('Y-m-d').'%"ORDER BY date DESC');
+       $song_ids =  $wpdb->get_results('SELECT * FROM wp_playlistarch ORDER BY date DESC');
     }
 
 
@@ -31,24 +31,26 @@
         	<!-- Левая часть -->
             <div class="cont">                    
                 <!-- Останні пісні -->
-                <div class="last-song page-args <?php if(!$songIDs){echo 'arcgEmpty';} ?>">
+                <div class="last-song">
                 	<h3 class="wrap-tit">
                     	Лунало в ефірі
                     </h3>
 
           
                     <div class="arch-songs">
-                        <div class="archiveDate">
-                            <div id="datepicker" data-date="<?php if($_GET['sortDate']){echo $_GET['sortDate']; }else {echo '<script>new Date()</script>';} ?>"></div>
-                            <input type="hidden" id="my_hidden_input">
-                        </div>
-
+                        <div class=" form-control-date"></div>
+<div class="input-group date form-control-date">
+    <input type="text" class="form-control" value="12-02-2012">
+    <div class="input-group-addon">
+        <span class="glyphicon glyphicon-th"></span>
+    </div>
+</div>
                     <?php $orderNum = 1; foreach($songIDs as $id) { ?>   
                     <div class="one-song">
                         <div class="one-song-in">
                             <?php $youtClass = ""; if(strlen(get_field("youtube", $id->song_id)) > 0)
                             { $youtClass = "thumb-yout"; }  ?>
-                            <div class="num"><?php echo $time = date("H:i",strtotime($id->date));  ?></div>
+                            <div class="num">1</div>
                             <a href="#" class="one-song-thumb pjax <?php echo $youtClass; ?>" data-youtube="<?php echo get_field('youtube', $id->song_id); ?>">
                                 <img src="<?php echo get_the_post_thumbnail_url( $id->song_id, 'thumbnail' ); ?>">
                             </a>
@@ -56,7 +58,9 @@
                                 <div class="one-song-tit">
                                         <b><?php the_field('artist', $id->song_id); ?></b></br><?php the_field('song', $id->song_id); ?>
                                 </div>
-
+                                <div class="one-song-time">
+                                    Прозвучала: <?php echo $id->date; ?>
+                                </div>
                             </div>
                         </div>
                     </div>     

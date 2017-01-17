@@ -2,70 +2,24 @@
 <html lang="ru">
   <head>
 
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?php bloginfo('description'); ?>">
     <meta name="author" content="">
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
+    <link href="<?php bloginfo('template_url'); ?>/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="<?php bloginfo('template_url'); ?>/css/jquery.bxslider.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="<?php bloginfo('template_url'); ?>/css/boots.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php bloginfo('template_url'); ?>/style.css" rel="stylesheet" type="text/css" />
     <title><?php bloginfo('name'); ?></title>
-<script>
-  var socket = io('http://zakarpattyafm.com.ua:7080');
 
-
-
-
-
-  socket.emit('seyGet');
-  socket.on('changed', function(changed){
-    var image = changed.image;
-    console.log(image);
-    changed = changed['changed'];
-    jQuery('.aplayer-title').html(changed.song);
-    jQuery('.aplayer-author').html('- '+changed.artist);
-    jQuery('.aplayer-pic').css('background-image', 'url('+image+')');
-  })
-  socket.on('sendSongg', function (data) {
-    //console.log(data);
-    jQuery('.all-songs').html('');
-    loadPlay(data);
-  });
-
-
-
-
-  function loadPlay(data){    
-
-
-data.sort(function(a, b) {
-  return a.key - b.key;
-});
-
-
-
-
-jQuery.each( data, function( key, value ) {
-    //console.log(value);
-    var img;
-    if(value.end){
-        img = value.end;
-    }
-    else {
-        img = 'http://placehold.it/150x150';
-    }
-    jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">'+value.key+'</div><a href="#" data-youtube="'+value.post.youtube[0]+'" class="one-song-thumb"><img class="minithumb" src="'+img+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post.artist[0]+'</span>'+value.post.song[0]+'</a></div></div></div></div>');
-
-      
-});
-        
-
-}
-</script>    
+   
 
     <?php if(!is_user_logged_in()){
-            header("Location: http://artpixel.com.ua");
+           // header("Location: http://artpixel.com.ua");
 
     }?>
     <!--[if lt IE 9]>
@@ -83,6 +37,7 @@ jQuery.each( data, function( key, value ) {
 
 </head>
 
+
 <body>
 	<div class="wrapper">
     	
@@ -90,7 +45,7 @@ jQuery.each( data, function( key, value ) {
         <header>
             
             <div class="logo">
-                <a href="#">
+                <a href="/" class="pjax">
                     <img src="<?php bloginfo('template_url'); ?>/images/logo.png" alt=" " />
                 </a>
             </div>

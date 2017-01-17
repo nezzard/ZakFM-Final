@@ -12,7 +12,6 @@ var rp = require('request-promise');
 var async = require('async');/*
 var syncrequest = require('sync-request');*/
 
-require( "console-stamp" )( console, { pattern : "dd/mm/yyyy HH:MM:ss.l" } );
 
 app.listen(7080);
 var wp = new WPAPI({
@@ -57,45 +56,36 @@ io.on('connection', function (socket) {
 
 
 
-		console.log("Тепер грає " + chalk.green(songdata[0]['artist'] + " | " + songdata[0]['song']));
 
 
-		if(/undefined/.test(String(songdata[0]['artist'])) === false &&
-		   /undefined/.test(String(songdata[0]['song'])) === false &&
-		   /UNKNOWN/.test(String(songdata[0]['artist'])) === false &&
-		   /UNKNOWN/.test(String(songdata[0]['song'])) === false &&
-		   /Джингл/.test(String(songdata[0]['artist'])) === false &&
-		   /Default/.test(String(songdata[0]['artist'])) === false &&
-		   /Default/.test(String(songdata[0]['song'])) === false &&
-		   /Джингл/.test(String(songdata[0]['song'])) === false) {
+		if(/UNKNOWN/.test(String(songdata[0]['artist'])) === false || /UNKNOWN/.test(String(songdata[0]['song'])) === false || /джинг/.test(String(songdata[0]['artist'])) === false || /Default/.test(String(songdata[0]['artist'])) === false || /Default/.test(String(songdata[0]['song'])) === false || /Джингл/.test(String(songdata[0]['song'])) === false) {
 
-			rp("http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+encodeURIComponent(songdata[0]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json")
+			rp("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+encodeURIComponent(songdata[0]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json")
 	    	.then(function (htmlString) {
-	    	var image = JSON.parse(htmlString).results.artistmatches.artist[0]['image'][2]['#text'];
+	    	var image = JSON.parse(htmlString).artist['image'][2]['#text'];
 	      	socket.broadcast.emit('changed', {"image": image, "changed": songdata[0]});
 	      
-	      	console.log(songdata[0]['changed']);
+	      
 		    if(songdata[0]['changed'] === true){      	
 				wp.song().search( songdata[0]['artist']+' - '+songdata[0]['song'] ).then(function( posts ) {
 				   wp.arch().create({
 				   	songid: posts[0].id
 				   }).then(function(er){
-				   	console.log(er);	   
-				   	console.log(chalk.blue('Archived' + songdata[0]['artist']+' - '+songdata[0]['song']));   	
+				   	console.log(er);	      	
 				   }).catch(function(e){
 
 				   	
 				   })
 				}).catch(function(e){
-					//console.log('Не найдено ');
+					console.log('Не найдено ');
 
 					//ПЕРЕВІРИТИ ЧИ ДОДАЄ, КОЛИ ПІСНЮ ДОДАЛИ В ТЕПЕР ГРАЄ
 					socket.emit("playlist", {id: 0, song: songdata[0]['song'], artist: songdata[0]['artist']})
 				})      	
 			} else {
-				//console.log(chalk.magenta('Изменений в текущей песни не обнаружено'));
+				console.log(chalk.magenta('Изменений в текущей песни не обнаружено'));
 			}
-		     // console.log(chalk.blue('Отправил изменения текущей песни'));
+		      console.log(chalk.blue('Отправил изменения текущей песни'));
 		    })
 		    .catch(function (err) {
 		        // Crawling failed...
@@ -115,9 +105,9 @@ io.on('connection', function (socket) {
 
 
 
-  socket.emit('getListt');
+  socket.emit('getList');
 
-  socket.on('playlistt', function (data) {
+  socket.on('playlist', function (data) {
     var result = JSON.parse(data);
     console.log(result);
 
@@ -138,9 +128,13 @@ for(var i = 0; i <= result.length-1;  ) {
 		//artUnk = result[i]['artist'];
 
 		console.log(chalk.red(result[i]['song']));
+		templ = /\bUNKNOWN\b/;
 
   function test(i) {
   setTimeout(function(){
+  	console.log(result[i]);
+
+
   	
 
 
@@ -148,17 +142,16 @@ for(var i = 0; i <= result.length-1;  ) {
   		socket.broadcast.emit('sendSongg', myJson);
   	}
 		if(ir < 5){
+			var songUnk = result[i]['song'];
+		var artUnk = result[i]['artist'];
 
 
 
 
-			if(String(result[i]['artist']).length  > 0 &&
- 				String(result[i]['song']).length  > 0 &&
-			   /UNKNOWN/.test(String(result[i]['artist'])) === false &&
-			   /UNKNOWN/.test(String(result[i]['song'])) === false){
 
-
-				console.log(chalk.red('Зашло'));
+			if( /UNKNOWN/.test(String(result[i]['artist'])) === false && /UNKNOWN/.test(String(result[i]['song'])) === false){
+	console.log(chalk.green(/UNKNOWN/.test(String(result[i]['artist']))));
+console.log(chalk.green(/UNKNOWN/.test(String(result[i]['song']))));			
 
   		wp.song().search( result[i]['artist']).then(function( posts ) {
   				//Берем миниатюру из первого поста, если артист найден
@@ -235,14 +228,12 @@ for(var i = 0; i <= result.length-1;  ) {
 
 
 			var myRequests = [];
-			myRequests.push(rp({uri: "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+encodeURIComponent(result[i]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json", json: true}));
+			myRequests.push(rp({uri: "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+encodeURIComponent(result[i]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json", json: true}));
 			myRequests.push(rp({uri: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q="+encodeURIComponent(result[i]['artist']+'+'+result[i]['song'])+"&type=video&key=AIzaSyAx41IMvqqZYxuUQ-MQ1oMJmZBikIrnfw4", json: true}));
 			Promise.all(myRequests)
 			  .then((arrayOfHtml) => {
-			  				  	console.log(arrayOfHtml[0].results.artistmatches.artist[0]['image'][2]['#text']);
-
-			  	if(arrayOfHtml[0].results.artistmatches.artist[0]['image'][2]['#text']){
-			  		last = arrayOfHtml[0].results.artistmatches.artist[0]['image'][2]['#text'];
+			  	if(arrayOfHtml[0]['artist']['image'][2]['#text']){
+			  		last = arrayOfHtml[0]['artist']['image'][2]['#text'];
 			  		console.log(last);
 			  	}else {
 			  		last = '';
@@ -265,7 +256,7 @@ for(var i = 0; i <= result.length-1;  ) {
 					    status: 'publish'
 					}).then(function( responsed ) {
 
-						if(last){
+						if(arrayOfHtml[0]['artist']['image'][2]['#text']){
 
 								request.get({url: last, encoding: 'binary'}, function (err, response, body) {
 									artist = responsed.artist[0].replace(/\s+/g, '');
@@ -350,7 +341,7 @@ for(var i = 0; i <= result.length-1;  ) {
 
 
 
-  }, 3000 * i);
+  }, 4000 * i);
 		console.log(chalk.yellow(i));
   }
   test(i);

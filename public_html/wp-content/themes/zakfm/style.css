@@ -143,6 +143,11 @@ header {
 	bottom: 10px;
 	right: 10px;
 	width: 32px;}
+
+.one-slide {
+	height:375px!important;
+	overflow: hidden;
+}
 	
 .slider .bx-wrapper .bx-pager.bx-default-pager a {
 	background-color: #fff;
@@ -151,11 +156,14 @@ header {
 .slider .bx-wrapper .bx-pager.bx-default-pager a:hover, .slider .bx-wrapper .bx-pager.bx-default-pager a.active {
 	background-color: #ff4641;}
 	
-.last-news {
+.last-news, .single-news {
 	float: left;
 	width: 100%;
 	margin-bottom: 30px;}
 
+.single-news h1 {
+	margin: 0.40em 0;
+}
 .wrap-tit {
 	margin-bottom: 15px;
 	border-bottom: 2px solid #fd4b4b;
@@ -214,7 +222,7 @@ header {
 .one-news {
 	float: left;
 	width: 100%;
-	margin-bottom: 15px;}
+	margin-bottom: 17px;}
 
 .one-news-thumb {
 	float: left;
@@ -229,7 +237,7 @@ header {
 .one-news-descr {
 	padding-left: 65px;}
 	
-.one-news-descr a {
+.one-news-descr > a {
 	font-size: 15px;
 	display: block;
 	cursor: pointer;
@@ -240,7 +248,7 @@ header {
     -moz-transition: all .3s ease;
     -o-transition: all .3s ease;}
 	
-.one-news-descr a:hover {
+.one-news-descr > a:hover {
 	color: #ef5646;}
 
 .one-news-descr a b {}
@@ -254,6 +262,12 @@ header {
 	
 .news-author {
 	float: left;}
+
+.news-author a{
+	font-weight: bold;
+	font-size:12px;
+	display: inline-block;
+	color:#333;}
 	
 .all-news {
 	float: left;
@@ -284,9 +298,14 @@ header {
 .all-songs {
 	margin: 0 -10px;}
 
+.arch-songs  .one-song{
+	height: auto;}
+
+.arch-songs  .one-song-in{
+	height: auto;}
 .one-song {
-	float: left;
-	width: 50%;
+	display: inline-block;
+	width: 49%;
 	padding: 10px 10px 0px;
 	margin-bottom: 0px;}
 	
@@ -327,6 +346,7 @@ header {
 	width: 50px;}
 	
 .one-song-thumb img {
+	max-width: 100%;
 	-webkit-transition: all .3s ease;
     -moz-transition: all .3s ease;
     -o-transition: all .3s ease;}
@@ -340,10 +360,10 @@ header {
 .one-song-thumb:hover:before {
 	background-color: rgba(255,255,255,1);}
 	
-.one-song:hover .one-song-thumb:before, .one-song:hover .one-song-thumb:after {
+.one-song:hover .one-song-thumb.thumb-yout:before, .one-song:hover .one-song-thumb.thumb-yout:after {
 	opacity: 1;}
 	
-.one-song-thumb:before {
+.one-song-thumb.thumb-yout:before {
 	content: "";
 	opacity: 0;
 	position: absolute;
@@ -363,7 +383,7 @@ header {
     -moz-transition: all .3s ease;
     -o-transition: all .3s ease;}
 	
-.one-song-thumb:after {
+.one-song-thumb.thumb-yout:after {
 	content: "";
 	opacity: 0;
 	position: absolute;
@@ -377,7 +397,11 @@ header {
 	margin-top: -7px;}
 
 .one-song-descr {
-	padding-left: 65px;}
+	padding-left: 60px;}
+
+.last-song.page-args .one-song-descr {
+	padding-left: 85px;
+}
 	
 .one-song-tit {
 	float: left;
@@ -485,6 +509,191 @@ header {
 	border-bottom: 5px solid transparent;
 	border-top: 5px solid transparent;}
 	
+
+
+/* Всі новини */
+ .category-single, .single-page {
+ 	width: 90%;
+ 	float: left;
+ 	position: relative;
+ 	margin-bottom: 20px;
+ 	border-bottom: 1px dashed whitesmoke;
+ }
+
+ .single-page, .single-page {
+ 	width: 100%;
+ 	float: left;
+ 	position: relative;
+ 	margin-bottom: 20px;
+ }
+
+ .single-page .content p {
+ 	margin-bottom: 15px;
+ 	float: left;
+ 	width: 100%;
+ }
+
+  .single-page .content h2 {
+    font-size: 1.8em;	
+  }
+
+  .single-page .content h3 {
+    font-size: 1.6em;	
+  }
+
+  .single-page .content h4 {
+    font-size: 1.5em;	
+  }
+
+ .cat-overlay {
+ 	position: absolute;
+ 	top: 10px;
+ }
+
+ .cat-overlay a {
+ 	background-color: #ef5646;
+ 	padding: 5px 10px;
+ 	color: #fff!important;
+ }
+
+ .cat-overlay a:hover {
+ 	text-decoration: none;
+ }
+
+ .category-single .cat-thumb {
+ 	width: 28%;
+  margin: 4px 3% 1px 0px;
+  float: left;
+ } 
+
+ .single-thumb {
+ 	width: 100%;
+ 	margin-bottom: 20px;
+ 	float: left;
+ }
+
+ .cat-tit {
+ 	font-size: 23px;
+ 	font-weight: normal;  
+ 	margin-bottom: 10px;
+ }
+
+ .cat-tit a {
+	color: #333;
+ }
+ .cat-tit a:hover {
+ 	color: #ef5646;
+ 	text-decoration: none!important;
+ }
+
+ .cat-descr {
+ 	margin-bottom: 10px;
+ }
+
+ .cat-content a {
+ 	color: #333;
+ }
+
+ .cat-content a:hover {
+ 	color: #ef5646;
+ }
+
+/* Кінець всі новини */
+
+
+/* Контактна форма */
+
+.wpcf7-form label{
+	font-size: 14px;
+    font-weight: bold;
+}
+
+.wpcf7-form-control {
+	padding: 0px 10px;
+    float: left;
+    clear: both;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;	
+}
+
+.wpcf7-text {
+    height: 33px;
+    width: 250px;
+    font-weight: normal;
+}
+
+
+.wpcf7-submit {
+    background-color: #333;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    color: #fff;	
+    clear: both;
+}
+
+
+
+/* Кінець контактна форма */
+/* Навігація */
+.arch-nav {
+	margin-top: 20px;
+	float: left;
+}
+
+.pickDate {
+	float: left;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.datepicker table tr td.active, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover, .datepicker table tr td.active:hover {
+	background: #333!important;
+}
+
+.archiveDate {
+  float: left;
+  height: 240px;
+  border: 1px solid #ccc;
+}
+
+.archiveDate table {
+	width: 100%;
+	height: 222px;
+}
+
+.archiveDate table th {
+	height: 30px;
+	vertical-align: middle;
+}
+
+.archiveDate table td {
+	width: 14.2%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.wp-pagenavi span {
+	  padding: 7px 10px!important;
+    text-align: center;
+    background: #ff4947;
+    color: #FFF;
+    border: none!important;
+}
+.wp-pagenavi a {
+		padding: 7px 10px!important;
+	  background: #555;
+	  color: #fff;
+	  border: none!important;
+}
+
+.wp-pagenavi a:hover {
+	color: #fff;
+	opacity: 0.8;
+	text-decoration: none!important;
+}
+
+/* Кінець навігація */
 footer {
 	float: left;
 	width: 100%;
@@ -512,6 +721,37 @@ footer {
 .foot-menu ul li a:hover {
 	text-decoration: underline;}
 	
+.modal {
+	z-index: 9999;
+}
+
+.modal-dialog {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width:562px;
+    height:412px;
+}
+
+.modal-title {
+	float: left;
+	font-size: 16px;
+}
+
+.closeModal {
+	float: right;
+	font-size: 30px;
+	line-height: 22px;
+}
+
+.closeModal:hover {
+	cursor: pointer;
+	opacity: .8;
+}
+
 .num {
 	float: left;
 	line-height: 50px;
@@ -521,10 +761,118 @@ footer {
 	
 .show-hide {
 	display: none;}
+
+.chat-tit {
+	padding: 8px 15px;
+	background-color: #333;
+	color: #fff;
+	font-size: 16px;
+	text-align: center;
+}
+
+.body-chat {
+	float: left;
+	width: 100%;
+	border: 1px solid #ccc;
+}
+
+.avat-user {
+	float: left;
+	width: 100%;
+	padding: 5px 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.avat-thumb {
+	float: left;
+	width: 45px;
+	height: 45px;
+}
+
+.avat-name {
+	padding-left: 55px;
+	height: 45px;
+	color: #333;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.avat-name-in {
+	display: table-cell;
+	vertical-align: middle;
+	height: 45px;
+}
+
+.avat-name span {
+	font-size: 12px;
+	display: block;
+	color: #8e8e8e;
+	font-weight: normal;
+}
+
+#msgs {
+	float: left;
+	width: 100%;
+	padding: 10px;
+	min-height: 100px;
+	max-height: 200px;
+	overflow: auto;
+	background-color: #f1f1f1;}
+
+#msgs li {
+	float: left;
+	width: 100%;
+	margin-bottom: 5px;}
+
+#msgs li b {
+	position: relative;
+	padding-right: 8px;
+}
+
+#msgs li b:before {
+	position: absolute;
+	content: "";
+	right: 0px;
+	top: 5px;
+	border-left: 6px solid #333;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+}
+
+.send-form {
+	float: left;
+	width: 100%;
+	padding: 10px;
+}
+
+.chat-inp {
+	padding: 0px 10px;
+	height: 33px;
+	width: 180px;
+	float: left;
+	border: 1px solid #ccc;
+}
+
+#login {
+	margin-bottom: 10px;
+}
+
+#chat {
+	display: none;
+}
+
+.btn-ok {
+	background-color: #333;
+	width: 88px;
+	height: 33px;
+	line-height: 33px;
+	text-align: center;
+	color: #fff;
+}
 	
 @media(max-width: 1050px) {
 
-.wrapper {
+.wrapper { 
 	width: 950px;}
 	
 .cont {
@@ -640,10 +988,49 @@ footer {
 	float: left;
 	width: 100%;}
 }
-	
 
-	
+.archiveDate {
+	float: left;
+	width: 100%;
+}
 
+.datepicker-inline {
+	float: left;
+	width: 100%;
+}
+
+.last-song.page-args .arch-songs {
+	float: left;
+	width: 100%;
+	counter-reset: myCounter;
+	list-style-type: decimal;
+	columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+.arcgEmpty .arch-songs {
+	columns: 1;
+  -webkit-columns: 1;
+  -moz-columns: 1;
+}
+
+.arcgEmpty .archiveDate {
+	width: 50%;
+}
+
+.last-song.page-args .one-song, .last-song.page-args .one-song-in {
+	width: 100%;
+}
+
+.last-song.page-args .one-song-descr {
+    padding-left: 110px;}
+	
+.last-song.page-args .num {
+	padding: 0 12px 0 0;
+	width: 50px;
+	text-align: center;
+font-weight: bold;}
 	
 	
 	/*
