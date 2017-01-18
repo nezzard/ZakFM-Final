@@ -27,7 +27,8 @@
   <script src="<?php bloginfo('template_url'); ?>/js/jquery.pjax.js"></script> 
 
     <script>
-       // $(document).pjax('.pjax, .menu-item a, .wp-pagenavi a', '.cont', {fragment: '.cont', maxCacheLength: 1000000, timeout: 0});
+        $(document).pjax('.pjax, .menu-item a, .wp-pagenavi a', '.cont', {fragment: '.cont', maxCacheLength: 1000000, timeout: 0});
+
 
         
     </script>
@@ -59,8 +60,7 @@
   socket.on('sendSongg', function (data) {
     //console.log(data);
     jQuery('.all-songs').html('');
-    //loadPlay(data);
-    console.log(data);
+    loadPlay(data);
   });
 
 
@@ -108,11 +108,18 @@ jQuery.each( data, function( key, value ) {
       <script src="<?php bloginfo('template_url'); ?>/js/boots.min.js" ></script>
 	<script>
 
+$('#datepicker').datepicker({
+    language: "uk",
+     autoclose: true,
+     format: "yyyy-mm-dd",
+ 
 
+});
 $('#datepicker').on('changeDate', function() {
-    $('#my_hidden_input').val(
-        $('#datepicker').datepicker('getFormattedDate')
-    );
+  var chechDate =  $('#my_hidden_input').val($('#datepicker').datepicker('getFormattedDate'));
+  console.log($('#datepicker').datepicker('getFormattedDate'));
+  window.location.href = '/archive/?sortDate='+$('#datepicker').datepicker('getFormattedDate');
+    
 });
 
 $('.form-control-date').datepicker({
@@ -123,38 +130,25 @@ $('.form-control-date').datepicker({
 
 
 
-$('#datepicker').datepicker({
-    language: "uk",
-     autoclose: true,
-     format: "yyyy-mm-dd",
-     "setDate": new Date(),
-
-});
 
   $('.bxslider').bxSlider({
     infiniteLoop: true
   });
-
+ 
 $(document).on('pjax:complete', function() {
   $('.bxslider').bxSlider({
     infiniteLoop: true
   });
 
+  $('#datepicker').datepicker({
+      language: "uk",
+       autoclose: true,
+       format: "yyyy-mm-dd",
+   
 
-
-$('#datepicker').datepicker({
-    language: "uk",
-     autoclose: true,
-     format: "yyyy-mm-dd",
-     "setDate": new Date(),
-
-});
+  });
 
 });
-
-
-
-
 
   </script>
 
@@ -197,12 +191,8 @@ $('#datepicker').datepicker({
 $('#myModal').on('hidden.bs.modal', function (e) {
 $('#myModal iframe').removeAttr('src');
 })
-  
-  socket.on('clientsInChat', function(count){
-    console.log(1);
-    console.log(count);
-  });
-  
+
+
   $('#join').click(function(){
     var name = $('#name').val();
     if (name != '') {
@@ -217,7 +207,7 @@ $('#myModal iframe').removeAttr('src');
   });
 
   if($.cookie('chatZakName')){
-   // socket.emit('join', $.cookie('chatZakName'));
+    socket.emit('join', $.cookie('chatZakName'));
     $('#login').css("display", "none");
     $('#chat').css("display", "block");
     ready = true;
@@ -227,29 +217,20 @@ $('#myModal iframe').removeAttr('src');
 
   $('#send').click(function(){
     if(ready) {
-      var msg = $('#msg').val();
-      socket.emit('send', msg);
-      $('#msg').val('');
-    }
+    var msg = $('#msg').val();
+    socket.emit('send', msg);
+    $('#msg').val('');
+
+}
   });
 
-  $('.form-inline').submit(function(e) {
-    e.preventDefault();
-      if(ready) {
-      var msg = $('#msg').val();
-      socket.emit('send', msg);
-      $('#msg').val('');
-    }
-  });
+
 
 
     socket.on('chat', function(who, msg){
     console.log(who);
     if(ready) {
       $('#msgs').append('<li><b>' + who + ' написал:</b> ' + msg + '</li>');
-
-    var objDiv = document.getElementById("msgs");
-objDiv.scrollTop = objDiv.scrollHeight;
     }
   });
 

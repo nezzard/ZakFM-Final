@@ -102,9 +102,15 @@ header {
 	
 .ads {
 	float: left;
-	widows: 100%;
+	width: 100%;
 	margin: 20px 0;
 }
+
+.ads img {
+	max-width: 100%;
+	height: auto;
+}
+
 .aside {
 	float: right;
 	width: 290px;}
@@ -180,7 +186,8 @@ header {
 	
 .left-news {
 	float: left;
-	width: 328px;}
+	width: 100%;
+	margin-bottom: 20px;}
 	
 .left-news-thumb {
 	float: left;
@@ -221,7 +228,7 @@ header {
 	
 .right-news {
 	float: right;
-	width: 320px;}
+	width: 100%;}
 
 .one-news {
 	float: left;
@@ -874,6 +881,59 @@ footer {
 	text-align: center;
 	color: #fff;
 }
+
+.archiveDate {
+	float: left;
+	width: 100%;
+}
+
+.datepicker-inline {
+	float: left;
+	width: 100%;
+}
+
+.last-song.page-args .arch-songs {
+	float: left;
+	width: 100%;
+	counter-reset: myCounter;
+	list-style-type: decimal;
+	columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+.arcgEmpty .arch-songs {
+	columns: 1 !important;
+  -webkit-columns: 1 !important;
+  -moz-columns: 1 !important;
+}
+
+.arcgEmpty .archiveDate {
+	width: 50%;
+}
+
+.last-song.page-args .one-song, .last-song.page-args .one-song-in {
+	width: 100%;
+}
+
+.last-song.page-args .one-song-descr {
+    padding-left: 110px;}
+	
+.last-song.page-args .num {
+	padding: 0 12px 0 0;
+	width: 50px;
+	text-align: center;
+font-weight: bold;}
+
+.last-news-in {
+	margin: 0 -10px;
+}
+
+.last-news-half {
+	padding: 0 10px;
+	width: 50%;
+	float: left;
+}
 	
 @media(max-width: 1050px) {
 
@@ -928,6 +988,11 @@ footer {
 
 .chat {
 	display: none;}
+
+.last-news-half {
+	width: 100%;
+	margin-bottom: 20px; 
+}
 
 }
 
@@ -992,50 +1057,16 @@ footer {
 .foot-menu {
 	float: left;
 	width: 100%;}
-}
-
-.archiveDate {
-	float: left;
-	width: 100%;
-}
-
-.datepicker-inline {
-	float: left;
-	width: 100%;
-}
 
 .last-song.page-args .arch-songs {
-	float: left;
-	width: 100%;
-	counter-reset: myCounter;
-	list-style-type: decimal;
-	columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
+    columns: 1;
+    -webkit-columns: 1;
+    -moz-columns: 1;
 }
 
-.arcgEmpty .arch-songs {
-	columns: 1;
-  -webkit-columns: 1;
-  -moz-columns: 1;
 }
 
-.arcgEmpty .archiveDate {
-	width: 50%;
-}
 
-.last-song.page-args .one-song, .last-song.page-args .one-song-in {
-	width: 100%;
-}
-
-.last-song.page-args .one-song-descr {
-    padding-left: 110px;}
-	
-.last-song.page-args .num {
-	padding: 0 12px 0 0;
-	width: 50px;
-	text-align: center;
-font-weight: bold;}
 	
 	
 	/*

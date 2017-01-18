@@ -34,25 +34,60 @@ wp.arch = wp.registerRoute('wp/v2', '/arch', {
 
 
 
+
+// Конец функции
+
+var people = {};
+
+
+
+
+io.on('connection', function (socket) {
+
+var myJsonn = new Array();
+function writet(myJson){
+
+
+	myJsonn.push({myJson});
+		fs.writeFile( "filename.json", JSON.stringify( myJsonn ), "utf8" );
+
+	console.log(JSON.stringify(myJsonn));
+	console.log(chalk.yellow(myJsonn + 'New'));
+	socket.broadcast.emit('sendSongg', myJson);
+	socket.emit('sendSongg', myJsonn);
+}	
+
+
+
+
+
+
+
 // Функция добавления поста
 
-function postSong(songArray){
-	console.log(songArray);
+function postSong(songArray, myJson){
+	console.log(songArray + " ВФІВІВ" );
 
-	let artist;
-	let song;
+ // myJson = '';
+
+	console.log(chalk.blue(songArray + ' kcfsjdfkljsdlf jlksdfj ' ));
+	songArray = JSON.parse(songArray);
+	var artist = songArray[0]['artist'];
+	var song = songArray[0]['song'];
+
+
+console.log(artist);
+
 
 	var myRequests = [];
-	myRequests.push(rp({uri: "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+encodeURIComponent(result[i]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json", json: true}));
-	myRequests.push(rp({uri: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q="+encodeURIComponent(result[i]['artist']+'+'+result[i]['song'])+"&type=video&key=AIzaSyAx41IMvqqZYxuUQ-MQ1oMJmZBikIrnfw4", json: true}));
+	myRequests.push(rp({uri: "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+encodeURIComponent(artist)+"&api_key=603b0439073b39ec6b890756f4345933&format=json", json: true}));
+	myRequests.push(rp({uri: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q="+encodeURIComponent(artist+'+'+song)+"&type=video&key=AIzaSyAx41IMvqqZYxuUQ-MQ1oMJmZBikIrnfw4", json: true}));
 	Promise.all(myRequests)
 	  	.then((arrayOfHtml) => {
-	  		console.log(arrayOfHtml[0].results.artistmatches.artist[0]['image'][2]['#text']);
 
 	  		//Пытаемся получить картинку от ласт фм, если нету, выдаем пустую строку
 		  	if(arrayOfHtml[0].results.artistmatches.artist[0]['image'][2]['#text']){
 		  		last = arrayOfHtml[0].results.artistmatches.artist[0]['image'][2]['#text'];
-		  		console.log(last);
 		  	}else {
 		  		last = '';
 		  	}
@@ -68,13 +103,14 @@ function postSong(songArray){
 
 		  	//Создаем пост с песней
 			wp.song().create({
-			    title: result[i]['artist']+' - '+result[i]['song'],
+			    title: artist+' - '+song,
 			    content: 'Your post content',
-			    artist: result[i]['artist'],
-			    song: result[i]['song'],
+			    artist: artist,
+			    song: song,
 			    youtube: yout,
 			    status: 'publish'
 			}).then(function( responsed ) {
+
 			//После создания поста, проверяем есть ли картинка, если да, загружаем ее и прикрепляем как миниатюру
 				if(last){
 					request.get({url: last, encoding: 'binary'}, function (err, response, body) {
@@ -103,15 +139,19 @@ function postSong(songArray){
 									  featured_media: responses.id
 									})
 									//Возвращаем айпи миниатюры 
+									console.log(chalk.red(myJson + ' 1 JSON'));
 									return responses.id;
 								})
 								.then(function(mediaId){
 									//Проверяем успешность и прикрепление изображения к песне
 									wp.media().id( mediaId ).then(function(media){
-								  		myJson.push({key: result[i]['id'], post: responsed, end: media.guid.rendered});
-
+								  		//return myJson.push({key: 1, post: responsed, end: media.guid.rendered});
+								  		writet({key: 1, post: responsed, end: media.guid.rendered});
+								  		console.log(chalk.red(mediaId + ' тест'));
 								  		//Запускаеми сохранение в JSON
-								  		return writet(myJson);
+
+								  		console.log(chalk.red(myJson + ' 2 JSON'));
+								  		// writet(myJson);
 									}).then(function(){
 										//Удаляем изображение из папки tmp
 								  		fs.unlinkSync("/tmp/img/"+convert(artist)+".png", function(err){
@@ -129,8 +169,9 @@ function postSong(songArray){
 				else {
 					//Если изображения нету, отправляем массив без изрбражения
 					console.log('not find');
-					myJson.push({key: result[i]['id'], post: responsed, end: 0});
-					writet(myJson);
+					//myJson.push({key: 1, post: responsed, end: 0});
+					writet({key: 1, post: responsed, end: 0});
+				//	writet(myJson);
 
 				};								
 				return  Promise.resolve(responsed);
@@ -141,16 +182,21 @@ function postSong(songArray){
 	  		//Ловим ошибку promise
 	  		console.log(chalk.red("Ошибка promise  " +errorCreate2));
 		});
+
+	  return myJson;
+console.log(chalk.blue(myJson + 'fcsdfsdf'));
+
+	  //socket.broadcast.emit('sendSongg', myJson);
+
 }
 
-// Конец функции
-
-var people = {};
 
 
 
 
-io.on('connection', function (socket) {
+	
+
+
 
   socket.on('join', function(name){
   	socket.join('chat');
@@ -166,6 +212,8 @@ io.on('connection', function (socket) {
 
 	socket.on('songchanged', function(changed){
 		var songdata = JSON.parse(changed);
+
+
 
 
 
@@ -225,7 +273,6 @@ io.on('connection', function (socket) {
 	});
 	
 
-		
 
 
 
@@ -236,10 +283,6 @@ io.on('connection', function (socket) {
     console.log(result);
 
 
-  function writet(myJson){
-		fs.writeFile( "filename.json", JSON.stringify( myJson ), "utf8" );
-		
-  }
 var myJson = new Array();
 
 
@@ -256,14 +299,14 @@ for(var i = 0; i <= result.length-1;  ) {
   	
 
 
-  	if(ir === 5){
-  		socket.broadcast.emit('sendSongg', myJson);
-  	}
+  	
+  		//socket.broadcast.emit('sendSongg', myJson);
+  	
 		if(ir < 5){
 
+			console.log(chalk.blue(myJson + ' My json'));
 
-
-
+			
 
 
 
@@ -272,10 +315,12 @@ for(var i = 0; i <= result.length-1;  ) {
 			   /UNKNOWN/.test(String(result[i]['artist'])) === false &&
 			   /UNKNOWN/.test(String(result[i]['song'])) === false){
 
-				let songArray = new Array ({'artist': result[i]['artist'], 'song': result[i]['song']});
-				//postSong(songArray);
-				console.log(songArray);
-				/*
+				var songArray = new Array ({'artist': result[i]['artist'], 'song': result[i]['song']});
+				songArray = JSON.stringify(songArray);
+				console.log(chalk.yellow(songArray));
+				
+				//console.log(songArray);
+				
   				wp.song().search( result[i]['artist']).then(function( posts ) {
   				//Берем миниатюру из первого поста, если артист найден
 					return posts[0]['featured_media'];
@@ -284,7 +329,7 @@ for(var i = 0; i <= result.length-1;  ) {
 		  				//Ищем композицию по артисту и названию песни
 						if(!posts[0]){
 							//Если не песня не найдена, добавляем ее в базу, с использованием миниатюры выше
-							var myRequests = [];
+							/*var myRequests = [];
 							myRequests.push(rp({uri: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q="+encodeURIComponent(result[i]['artist']+'+'+result[i]['song'])+"&type=video&key=AIzaSyAx41IMvqqZYxuUQ-MQ1oMJmZBikIrnfw4", json: true}));
 							Promise.all(myRequests)
 							  .then((arrayOfHtml) => {
@@ -323,7 +368,9 @@ for(var i = 0; i <= result.length-1;  ) {
 							    
 							  })
 							  .catch();
+							*/
 
+							postSong(songArray, myJson);
 
 						}else {
 							//Если посты найдены, пушим их в массив и отправляем клиенту
@@ -331,13 +378,17 @@ for(var i = 0; i <= result.length-1;  ) {
 
 							if(posts[0]['featured_media'] === 0){
 								//Отправляем клиенту массив БЕЗ миниатюрой 
-								myJson.push({key: result[i]['id'], post: posts[0], end: 0});
-								writet(myJson);
+								//myJson.push({key: result[i]['id'], post: posts[0], end: 0});
+								writet({key: result[i]['id'], post: posts[0], end: 0});
+								 console.log(chalk.yellow('Зашлдо'));
+								
 							}
 			  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
 			  					//Отправляем клиенту массив с миниатюрой 
-			  					myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
-			  					writet(myJson);
+			  					//myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
+
+			  					writet({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
+			  					
 
 			  				});					
 
@@ -349,8 +400,9 @@ for(var i = 0; i <= result.length-1;  ) {
 
 // Тут должна быть функция, если нету картинки в исполнителе который уже был postSong()			
 
-				});*/
+				});
 
+  			writet(myJson);
 	  		//Конец if с проверкой на валидность артиста и песни
 	  		ir++;
 			console.log(chalk.green('Unknown Не найден'));
@@ -364,12 +416,11 @@ for(var i = 0; i <= result.length-1;  ) {
 
 		}
 
-	
 
 
 
   }, 3000 * i);
-		console.log(chalk.yellow(i));
+
   }
   test(i);
  	
