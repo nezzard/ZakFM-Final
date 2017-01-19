@@ -403,7 +403,7 @@ postSong(songArray, myJson);
 	
 socket.on('seyGet', function(){
 	myJson = reload("./filename.json");
-	socket.emit('sendSongg' , myJson);
+	socket.emit('sendSongg' , JSON.stringify(myJson));
 
 })
 
