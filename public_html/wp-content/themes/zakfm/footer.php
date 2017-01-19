@@ -45,21 +45,23 @@
     
 <script>
   var socket = io('http://zakarpattyafm.com.ua:7080');
-
+  console.log("dasdads");
 
   socket.emit('seyGet');
   socket.on('changed', function(changed){
+      console.log(2);
     var image = changed.image;
     changed = changed['changed'];
-    console.log(changed);
+    //console.log(changed);
     jQuery('.aplayer-title').html(changed.song);
     jQuery('.aplayer-author').html('- '+changed.artist);
     jQuery('.aplayer-pic').css('background-image', 'url('+image+')');
   })
   socket.on('sendSongg', function (data) {
-    //console.log(data);
     jQuery('.all-songs').html('');
-    //loadPlay(data);
+    loadPlay(JSON.parse(data));
+        console.log(1);
+
     console.log(data);
   });
 
@@ -67,7 +69,7 @@
 
 
   function loadPlay(data){    
-
+console.log(1);
 
 data.sort(function(a, b) {
   return a.key - b.key;

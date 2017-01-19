@@ -47,14 +47,17 @@ io.on('connection', function (socket) {
 var myJsonn = new Array();
 function writet(myJson){
 
+	//console.log(myJson['key']+"1")
 
-	myJsonn.push({myJson});
+
+	console.log(chalk.red(JSON.stringify(myJson)));
+
+	myJsonn.push(myJson);
 		fs.writeFile( "filename.json", JSON.stringify( myJsonn ), "utf8" );
+		console.log(chalk.blue(myJsonn.length));
 
-	console.log(JSON.stringify(myJsonn));
-	console.log(chalk.yellow(myJsonn + 'New'));
-	socket.broadcast.emit('sendSongg', myJson);
-	socket.emit('sendSongg', myJsonn);
+	console.log(chalk.yellow(myJsonn));
+	socket.broadcast.emit('sendSongg', JSON.stringify(myJsonn));
 }	
 
 
@@ -146,7 +149,7 @@ console.log(artist);
 									//Проверяем успешность и прикрепление изображения к песне
 									wp.media().id( mediaId ).then(function(media){
 								  		//return myJson.push({key: 1, post: responsed, end: media.guid.rendered});
-								  		writet({key: 1, post: responsed, end: media.guid.rendered});
+								  		writet({key: songArray[0]['id'], post: responsed, end: media.guid.rendered});
 								  		console.log(chalk.red(mediaId + ' тест'));
 								  		//Запускаеми сохранение в JSON
 
@@ -170,7 +173,7 @@ console.log(artist);
 					//Если изображения нету, отправляем массив без изрбражения
 					console.log('not find');
 					//myJson.push({key: 1, post: responsed, end: 0});
-					writet({key: 1, post: responsed, end: 0});
+					writet({key: songArray[0]['id'], post: responsed, end: 0});
 				//	writet(myJson);
 
 				};								
@@ -304,10 +307,10 @@ for(var i = 0; i <= result.length-1;  ) {
   	
 		if(ir < 5){
 
-			console.log(chalk.blue(myJson + ' My json'));
+			console.log(chalk.blue('dasda My json'));
 
 			
-
+			
 
 
 			if(String(result[i]['artist']).length  > 0 &&
@@ -315,7 +318,7 @@ for(var i = 0; i <= result.length-1;  ) {
 			   /UNKNOWN/.test(String(result[i]['artist'])) === false &&
 			   /UNKNOWN/.test(String(result[i]['song'])) === false){
 
-				var songArray = new Array ({'artist': result[i]['artist'], 'song': result[i]['song']});
+				var songArray = new Array ({'key': result[i]['id'], 'artist': result[i]['artist'], 'song': result[i]['song']});
 				songArray = JSON.stringify(songArray);
 				console.log(chalk.yellow(songArray));
 				
@@ -326,83 +329,46 @@ for(var i = 0; i <= result.length-1;  ) {
 					return posts[0]['featured_media'];
   				}).then(function(data){  			
 		  			wp.song().search( result[i]['artist']+' - '+result[i]['song'] ).then(function( posts ) {
+		  				
 		  				//Ищем композицию по артисту и названию песни
-						if(!posts[0]){
-							//Если не песня не найдена, добавляем ее в базу, с использованием миниатюры выше
-							/*var myRequests = [];
-							myRequests.push(rp({uri: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q="+encodeURIComponent(result[i]['artist']+'+'+result[i]['song'])+"&type=video&key=AIzaSyAx41IMvqqZYxuUQ-MQ1oMJmZBikIrnfw4", json: true}));
-							Promise.all(myRequests)
-							  .then((arrayOfHtml) => {
-						  	if(arrayOfHtml[0]['items']) {
-						  		yout = arrayOfHtml[0]['items'][0]['id'].videoId;
-						  	}
-						  	else {
-						  		yout = "";
-						  	}
+		  						if(!posts[0]){
+		  							postSong(songArray, myJson);
+		  						}
+		  						else{
+									//Если посты найдены, пушим их в массив и отправляем клиенту
+									console.log("Посты найдены ");
 
-									wp.song().create({
-									    title: result[i]['artist']+' - '+result[i]['song'],
-									    content: 'Your post content',
-									    youtube: yout,
-									    artist: result[i]['artist'],
-									    song: result[i]['song'],
-									    featured_media: data,
-									    status: 'publish'
-									}).then(function( response ) {
+									if(posts[0]['featured_media'] === 0){
+										//Отправляем клиенту массив БЕЗ миниатюрой 
+										//myJson.push({key: result[i]['id'], post: posts[0], end: 0});
+										writet({key: result[i]['id'], post: posts[0], end: 0});
+										 console.log(chalk.yellow('Зашлдо'));
+										
+									}
+					  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
+					  					//Отправляем клиенту массив с миниатюрой 
+					  					//myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
 
-								      wp.arch().create({
-								      	songid: response.id
-								      }).then(function(er){
-								      	console.log(er);	      	
-								      })
+					  					writet({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
+					  					
 
-											console.log(response.id);
-											myJson.push({key: result[i]['id'], post: response});
-											writet(myJson);
+					  				});			  							
+		  						}
+				
 
+							
 
-									}).then(function(errorCreate){
-										console.log(chalk.red('Ошибка добавления 1' + errorCreate));
-									});
-
-							    
-							  })
-							  .catch();
-							*/
-
-							postSong(songArray, myJson);
-
-						}else {
-							//Если посты найдены, пушим их в массив и отправляем клиенту
-							console.log("Посты найдены ");
-
-							if(posts[0]['featured_media'] === 0){
-								//Отправляем клиенту массив БЕЗ миниатюрой 
-								//myJson.push({key: result[i]['id'], post: posts[0], end: 0});
-								writet({key: result[i]['id'], post: posts[0], end: 0});
-								 console.log(chalk.yellow('Зашлдо'));
-								
-							}
-			  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
-			  					//Отправляем клиенту массив с миниатюрой 
-			  					//myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
-
-			  					writet({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
-			  					
-
-			  				});					
-
-						}
-
-		  		})
+				  		});
   				}).catch(function( err ) {
 
+postSong(songArray, myJson);
+  					console.log("Dibil");
 
 // Тут должна быть функция, если нету картинки в исполнителе который уже был postSong()			
 
 				});
 
-  			writet(myJson);
+  	//		writet(myJson);
 	  		//Конец if с проверкой на валидность артиста и песни
 	  		ir++;
 			console.log(chalk.green('Unknown Не найден'));
@@ -412,6 +378,8 @@ for(var i = 0; i <= result.length-1;  ) {
 			else {
 				console.log(chalk.red('Найден Unknown'));
 			}
+
+			console.log(1);
 
 
 		}
