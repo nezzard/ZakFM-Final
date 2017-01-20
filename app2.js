@@ -7,6 +7,10 @@ var fs = require( 'fs' );
 var reload = require( 'require-reload' );
 var convert = require('cyrillic-to-latin')
 var chalk = require('chalk');
+var axios = require('axios');
+var chunk = require('lodash.chunk')
+var _ = require('lodash')
+
 
 var rp = require('request-promise');
 var async = require('async');/*
@@ -50,13 +54,13 @@ function writet(myJson){
 	//console.log(myJson['key']+"1")
 
 
-	console.log(chalk.red(JSON.stringify(myJson)));
+	//console.log(chalk.red(JSON.stringify(myJson)));
 
 	myJsonn.push(myJson);
 		fs.writeFile( "filename.json", JSON.stringify( myJsonn ), "utf8" );
-		console.log(chalk.blue(myJsonn.length));
+		//console.log(chalk.blue(myJsonn.length));
 
-	console.log(chalk.yellow(myJsonn));
+	//console.log(chalk.yellow(myJsonn));
 	socket.broadcast.emit('sendSongg', JSON.stringify(myJsonn));
 }	
 
@@ -81,12 +85,26 @@ function postSong(songArray, myJson){
 
 console.log(artist);
 
-
+/*
 	var myRequests = [];
 	myRequests.push(rp({uri: "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+encodeURIComponent(artist)+"&api_key=603b0439073b39ec6b890756f4345933&format=json", json: true}));
 	myRequests.push(rp({uri: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q="+encodeURIComponent(artist+'+'+song)+"&type=video&key=AIzaSyAx41IMvqqZYxuUQ-MQ1oMJmZBikIrnfw4", json: true}));
-	Promise.all(myRequests)
+
+
+
+*/
+  var myRequests = [
+    axios.get("http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+encodeURIComponent(artist)+"&api_key=603b0439073b39ec6b890756f4345933&format=json"),
+    axios.get("https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q="+encodeURIComponent(artist+'+'+song)+"&type=video&key=AIzaSyAx41IMvqqZYxuUQ-MQ1oMJmZBikIrnfw4")
+  ];
+return 	Promise.all(myRequests)
+
+
+		.then((arrayOfHtml) => arrayOfHtml.map(result => result.data))
+
 	  	.then((arrayOfHtml) => {
+
+	  		console.log(arrayOfHtml[0].artist);
 
 	  		//Пытаемся получить картинку от ласт фм, если нету, выдаем пустую строку
 		  	if(arrayOfHtml[0].results.artistmatches.artist[0]['image'][2]['#text']){
@@ -105,7 +123,7 @@ console.log(artist);
 		  	}
 
 		  	//Создаем пост с песней
-			wp.song().create({
+			return wp.song().create({
 			    title: artist+' - '+song,
 			    content: 'Your post content',
 			    artist: artist,
@@ -291,6 +309,59 @@ var myJson = new Array();
 
 
 
+
+
+result.reduce((lastRequestDone, item) => {
+
+	var songArray = new Array ({'key': item['id'], 'artist': item['artist'], 'song': item['song']});
+	songArray = JSON.stringify(songArray);
+
+
+
+  				return lastRequestDone.then(() => 
+  				wp.song().search( item['artist']).then(function( posts ) {
+  				//Берем миниатюру из первого поста, если артист найден
+					return posts[0]['featured_media'];
+  				}).then(function(data){  			
+		  			return lastRequestDone.then(() => wp.song().search( item['artist']+' - '+item['song'] ).then(function( posts ) {
+		  				
+		  				//Ищем композицию по артисту и названию песни
+		  						if(!posts[0]){
+		  							 return lastRequestDone.then(() => postSong(songArray, myJson));
+		  						}
+		  						else{
+									//Если посты найдены, пушим их в массив и отправляем клиенту
+									console.log("Посты найдены ");
+
+									if(posts[0]['featured_media'] === 0){
+										//Отправляем клиенту массив БЕЗ миниатюрой 
+										//myJson.push({key: result[i]['id'], post: posts[0], end: 0});
+										return lastRequestDone.then(() => writet({key: item['id'], post: posts[0], end: 0}));
+									
+									}
+					  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
+					  					//Отправляем клиенту массив с миниатюрой 
+					  					//myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
+					  					return lastRequestDone.then(() => writet({key: item['id'], post: posts[0], end: media.guid.rendered}));
+									});			  							
+		  						}										
+
+				  		}));
+  					}).catch(function( err ) {
+					    return lastRequestDone.then(() => postSong(songArray, myJson));
+						// Тут должна быть функция, если нету картинки в исполнителе который уже был postSong()			
+
+					}));
+
+  	//		writet(myJson);
+
+
+
+
+  }, Promise.resolve());
+
+
+/*
 var ir = 0;
 for(var i = 0; i <= result.length-1;  ) {
 
@@ -304,7 +375,7 @@ for(var i = 0; i <= result.length-1;  ) {
 
   	
   		//socket.broadcast.emit('sendSongg', myJson);
-  	
+  	/*
 		if(ir < 5){
 
 			console.log(chalk.blue('dasda My json'));
@@ -324,6 +395,14 @@ for(var i = 0; i <= result.length-1;  ) {
 				
 				//console.log(songArray);
 				
+
+
+
+
+
+
+
+
   				wp.song().search( result[i]['artist']).then(function( posts ) {
   				//Берем миниатюру из первого поста, если артист найден
 					return posts[0]['featured_media'];
@@ -354,14 +433,12 @@ for(var i = 0; i <= result.length-1;  ) {
 
 					  				});			  							
 		  						}
-				
-
-							
+										
 
 				  		});
   				}).catch(function( err ) {
 
-postSong(songArray, myJson);
+					postSong(songArray, myJson);
   					console.log("Dibil");
 
 // Тут должна быть функция, если нету картинки в исполнителе который уже был postSong()			
@@ -397,7 +474,7 @@ postSong(songArray, myJson);
 
 
 }	
-
+*/
 
   });
 	

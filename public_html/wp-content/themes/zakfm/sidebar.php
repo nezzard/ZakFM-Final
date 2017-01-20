@@ -70,14 +70,14 @@
                               <div class="span5 offset2" id="login">
                                 <form class="form-inline">
                                   <input type="text" class="input-small chat-inp" placeholder="Ваше имя" id="name">
-                                  <input type="button" name="join" id="join" value="Присоединиться" class="btn-ok">
+                                  <input type="button" name="join" id="join" value="Війти" class="btn-ok">
                                 </form>
                               </div>
 
                               <div class="span5 offset2" id="chat">
                                 <form id="2" class="form-inline">
                                   <input type="text" class="input chat-inp" placeholder="Ваше сообщение" id="msg">
-                                  <input type="button" name="send" id="send" value="Отправить" class="btn-ok">
+                                  <input type="button" name="send" id="send" value="Відправити" class="btn-ok">
                                 </form>
                               </div>
                             </div>
