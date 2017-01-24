@@ -40,8 +40,9 @@
 
 <body>
 	<div class="wrapper">
-    	
-        <!-- Шапка -->
+      <!-- Шапка -->
+
+
         <header>
             
             <div class="logo">

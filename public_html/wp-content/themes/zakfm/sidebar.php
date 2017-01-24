@@ -85,6 +85,14 @@
                       </div>
    
                     </div>
+
+
+                    <div class="one-widget rekl">
+                      <a href="#">
+                          <img src="http://placehold.it/290x350">
+                        </a>
+                    </div>
+
                     
                 </aside>
                 <!-- Конец Сайдбар -->

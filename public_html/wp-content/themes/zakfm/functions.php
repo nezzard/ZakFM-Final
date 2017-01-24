@@ -212,21 +212,27 @@ function slug_update_playarch( $value ) {
 
 
 
+
+
+
+
+
 add_action( 'transition_post_status', function ( $new_status, $old_status, $post )
 {
 
-    if( 'publish' == $new_status && 'publish' != $old_status && $post->post_type == 'song' ) {
 
-function true_unset_image_sizes( $sizes) {
-    unset( $sizes['thumbnail']); // миниатюра
-    unset( $sizes['medium']); // средний
-    unset( $sizes['large']); // большой
-    unset( $sizes['full']); // оригинал
-    return $sizes;
+if( 'publish' == $new_status && 'publish' != $old_status && $post->post_type == 'song' ) {
+
+        function true_unset_image_sizes( $sizes) {
+            unset( $sizes['thumbnail']); // миниатюра
+            unset( $sizes['medium']); // средний
+            unset( $sizes['large']); // большой
+            unset( $sizes['full']); // оригинал
+            return $sizes;
+        }
+         
+        add_filter('intermediate_image_sizes_advanced', 'true_unset_image_sizes');
 }
- 
-add_filter('intermediate_image_sizes_advanced', 'true_unset_image_sizes');
-    }
 }, 10, 3 );
 
 
@@ -261,11 +267,11 @@ function last_song() {
         <div class="one-song-in">
         		<?php $youtClass = ""; if(strlen(get_field("youtube", $id->song_id)) > 0)
         		{ $youtClass = "thumb-yout"; }  ?>
-						<a href="#" class="one-song-thumb <?php echo $youtClass; ?>" data-youtube="<?php echo get_field('youtube', $id->song_id); ?>">
+					<a href="javascript:void(0)" class="one-song-thumb <?php echo $youtClass; ?>" data-youtube="<?php echo get_field('youtube', $id->song_id); ?>">
                 <img src="<?php if(has_post_thumbnail( $id->song_id)) { 
 									echo get_the_post_thumbnail_url( $id->song_id, 'thumbnail' ); 
               	}else {
-              		echo "http://placehold.it/150x150";
+              		echo bloginfo('template_url').'/images/layer.png';
               	}
                 ?>">              
             </a>

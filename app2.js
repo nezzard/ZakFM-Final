@@ -8,8 +8,9 @@ var reload = require( 'require-reload' );
 var convert = require('cyrillic-to-latin')
 var chalk = require('chalk');
 var axios = require('axios');
-var chunk = require('lodash.chunk')
-var _ = require('lodash')
+
+var _ = require('lodash');
+var chunk = require('lodash.chunk');
 
 
 var rp = require('request-promise');
@@ -42,7 +43,7 @@ wp.arch = wp.registerRoute('wp/v2', '/arch', {
 // Конец функции
 
 var people = {};
-
+var count = 0;
 
 
 
@@ -51,16 +52,9 @@ io.on('connection', function (socket) {
 var myJsonn = new Array();
 function writet(myJson){
 
-	//console.log(myJson['key']+"1")
-
-
-	//console.log(chalk.red(JSON.stringify(myJson)));
-
 	myJsonn.push(myJson);
-		fs.writeFile( "filename.json", JSON.stringify( myJsonn ), "utf8" );
-		//console.log(chalk.blue(myJsonn.length));
+	fs.writeFile( "filename.json", JSON.stringify( myJsonn ), "utf8" );
 
-	//console.log(chalk.yellow(myJsonn));
 	socket.broadcast.emit('sendSongg', JSON.stringify(myJsonn));
 }	
 
@@ -212,22 +206,30 @@ console.log(chalk.blue(myJson + 'fcsdfsdf'));
 }
 
 
+socket.emit('count', count);
 
 
+socket.on('disconnect', function(room){
 
-	
+  count = count-1;
+});
 
 
+socket.on('room', function(chat){
 
+})
+
+console.log(count);
   socket.on('join', function(name){
-  	socket.join('chat');
+
     people[socket.id] = name;
     console.log(people[socket.id]);
-
+    
   });
 
-  socket.on('send', function(msg){
-    io.emit('chat', people[socket.id], msg);
+  socket.on('send', function(msg, who){
+  	console.log(who);
+    io.emit('chat', who, msg);
   });
 
 
@@ -250,7 +252,9 @@ console.log(chalk.blue(myJson + 'fcsdfsdf'));
 		   /Джингл/.test(String(songdata[0]['artist'])) === false &&
 		   /Default/.test(String(songdata[0]['artist'])) === false &&
 		   /Default/.test(String(songdata[0]['song'])) === false &&
-		   /Джингл/.test(String(songdata[0]['song'])) === false) {
+		   /Джингл/.test(String(songdata[0]['song'])) === false &&
+		   /Пошта/.test(String(songdata[0]['song'])) === false &&
+		   /Пошта/.test(String(songdata[0]['artist'])) === false) {
 
 			rp("http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+encodeURIComponent(songdata[0]['artist'])+"&api_key=603b0439073b39ec6b890756f4345933&format=json")
 	    	.then(function (htmlString) {
@@ -317,7 +321,6 @@ result.reduce((lastRequestDone, item) => {
 	songArray = JSON.stringify(songArray);
 
 
-
   				return lastRequestDone.then(() => 
   				wp.song().search( item['artist']).then(function( posts ) {
   				//Берем миниатюру из первого поста, если артист найден
@@ -337,24 +340,32 @@ result.reduce((lastRequestDone, item) => {
 										//Отправляем клиенту массив БЕЗ миниатюрой 
 										//myJson.push({key: result[i]['id'], post: posts[0], end: 0});
 										return lastRequestDone.then(() => writet({key: item['id'], post: posts[0], end: 0}));
-									
+										 console.log(chalk.yellow('Зашлдо'));
+										
 									}
 					  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
 					  					//Отправляем клиенту массив с миниатюрой 
 					  					//myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
+
 					  					return lastRequestDone.then(() => writet({key: item['id'], post: posts[0], end: media.guid.rendered}));
-									});			  							
-		  						}										
+					  					
+
+					  				});			  							
+		  						}
+										
 
 				  		}));
-  					}).catch(function( err ) {
-					    return lastRequestDone.then(() => postSong(songArray, myJson));
-						// Тут должна быть функция, если нету картинки в исполнителе который уже был postSong()			
+  				}).catch(function( err ) {
 
-					}));
+					    return lastRequestDone.then(() => postSong(songArray, myJson));
+
+  					console.log("Dibil");
+
+// Тут должна быть функция, если нету картинки в исполнителе который уже был postSong()			
+
+				}));
 
   	//		writet(myJson);
-
 
 
 

@@ -31,7 +31,7 @@
         	<!-- Левая часть -->
             <div class="cont">                    
                 <!-- Останні пісні -->
-                <div class="last-song page-args <?php if(!$songIDs){echo 'arcgEmpty';} ?>">
+                <div class="last-song page-args">
                 	<h3 class="wrap-tit">
                     	Лунало в ефірі
                     </h3>
@@ -50,7 +50,14 @@
                             { $youtClass = "thumb-yout"; }  ?>
                             <div class="num"><?php echo $time = date("H:i",strtotime($id->date));  ?></div>
                             <a href="#" class="one-song-thumb pjax <?php echo $youtClass; ?>" data-youtube="<?php echo get_field('youtube', $id->song_id); ?>">
-                                <img src="<?php echo get_the_post_thumbnail_url( $id->song_id, 'thumbnail' ); ?>">
+
+                                <img src="<?php if(has_post_thumbnail( $id->song_id)) { 
+                                    echo get_the_post_thumbnail_url( $id->song_id, 'thumbnail' ); 
+                                }else {
+                                    echo bloginfo('template_url').'/images/layer.png';
+                                }
+                                ?>"> 
+
                             </a>
                             <div class="one-song-descr">
                                 <div class="one-song-tit">
