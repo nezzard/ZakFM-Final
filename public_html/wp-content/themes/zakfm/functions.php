@@ -20,6 +20,9 @@ wp_localize_script( 'parser-js', 'parserVal', $parserVal );*/
 }
 
 
+
+
+
 add_theme_support( 'post-thumbnails' );
 
 
@@ -82,8 +85,22 @@ add_action( 'init', 'song_post_type', 0 );
 
 
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'wp/v2', '/songs', array(
+        'methods' => 'POST',
+        'callback' => 'songsTable',
+
+    ) );
+} );
 
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'wp/v2', '/songs/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'songsTableSearch',
+
+    ) );
+} );
 
 
 add_action( 'rest_api_init', function () {
@@ -111,6 +128,26 @@ function my_awesome_funсc($data){
 		   "song_id" => $data['songid'],
            "date" => date('Y-m-d H:i:s')
 		));
+
+}
+
+
+function songsTableSearch($dat){
+    return 1;
+
+
+}
+
+function songsTable($data){
+
+
+        global $wpdb;
+        return $wpdb->insert("wp_songs", array(
+           "artist" => $data['artist'],
+           "song" => $data['song'],
+           "image" => $data['image'],
+           "youtube" => $data['youtube']
+        ));
 
 }
 
@@ -357,6 +394,21 @@ add_action( 'init', 'slider_post_type', 0 );
 
 
 
+
+
+if( function_exists('acf_add_options_page') ) {
+    
+    acf_add_options_page(array(
+        'page_title'    => 'Налаштування реклами',
+        'menu_title'    => 'Реклама',
+        'menu_slug'     => 'theme-general-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      => false
+    ));
+    
+
+    
+}
 
 
 

@@ -16,24 +16,36 @@
                     
                     <div class="one-widget">
                     	<div class="social">
-                        	<a href="#">
+                            <a href="https://vk.com/zakarpattyafm">
+                              <img src="<?php bloginfo('template_url'); ?>/images/vk.png" alt=" " />
+                            </a>
+                        	  <a href="https://www.facebook.com/zakarpattyafm/">
                             	<img src="<?php bloginfo('template_url'); ?>/images/facebook.png" alt=" " />
                             </a>
-                            <a href="#">
-                            	<img src="<?php bloginfo('template_url'); ?>/images/google-plus.png" alt=" " />
+                            
+                            <a href="http://tunein.com/radio/Zakarpattya-FM-1019-s112621/">
+                              <img src="<?php bloginfo('template_url'); ?>/images/tune.png" alt=" " />
                             </a>
-                            <a href="#">
-                            	<img src="<?php bloginfo('template_url'); ?>/images/vk.png" alt=" " />
-                            </a>
-                            <a href="#">
-                            	<img src="<?php bloginfo('template_url'); ?>/images/facebook.png" alt=" " />
-                            </a>
+                        </div>
+                        <div class="viber">
+                            <div class="viber-tit">
+
+                            </div>
+                            <div class="viber-thumb">
+                              <img src="<?php bloginfo('template_url'); ?>/images/viber.png">
+                            </div>
+                            <div class="viber-number">
+                              <div class="viber-number-in">
+                               <span>Пишіть нам в Viber!</span>
+                               +380-50-432-04-33
+                              </div>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="one-widget rekl">
                     	<a href="#">
-                        	<img src="http://placehold.it/290x220">
+                        	<img src="<?php echo get_field('перед_чатом', 'option'); ?>">
                         </a>
                     </div>
                     
@@ -49,9 +61,9 @@
                               <div class="avat-name">
                                   <div class="avat-name-in">
                                   Закарпаття ФМ
-                                  <span>
+                                  <!--span>
                                   Онлайн чат (104 учасника)
-                                  </span>
+                                  </span-->
                                 </div>
                               </div>
                           </div>
@@ -68,15 +80,15 @@
                           <div class="send-form">
                             <div class="row">
                               <div class="span5 offset2" id="login">
-                                <form class="form-inline">
-                                  <input type="text" class="input-small chat-inp" placeholder="Ваше имя" id="name">
-                                  <input type="button" name="join" id="join" value="Війти" class="btn-ok">
+                                <form class="form-inline noLogged" >
+                                  <input type="text" class="input-small chat-inp" placeholder="Ваше ім'я" id="name">
+                                  <input type="button" name="join" id="join" value="Увійти" class="btn-ok">
                                 </form>
                               </div>
 
                               <div class="span5 offset2" id="chat">
-                                <form id="2" class="form-inline">
-                                  <input type="text" class="input chat-inp" placeholder="Ваше сообщение" id="msg">
+                                <form id="2" class="form-inline-msg">
+                                  <input type="text" class="input chat-inp" placeholder="Ваше повідомлення" id="msg">
                                   <input type="button" name="send" id="send" value="Відправити" class="btn-ok">
                                 </form>
                               </div>
@@ -89,7 +101,7 @@
 
                     <div class="one-widget rekl">
                       <a href="#">
-                          <img src="http://placehold.it/290x350">
+                          <img src="<?php echo get_field('після_чата', 'option'); ?>">
                         </a>
                     </div>
 

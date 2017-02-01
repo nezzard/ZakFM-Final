@@ -15,7 +15,40 @@ Text Domain: artpixel
 
 body {
 	font-family: 'PT Sans', sans-serif;
-	background-color: #f3eff0;}
+	background-color: #f3eff0;
+	font-size: 16px;}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 5px 0 15px;
+}
+
+h1 {
+	font-size: 24px;
+}
+
+h2 {
+	font-size: 22px;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+h4 {
+	font-size: 18px;
+}
+
+h5 {
+	font-size: 16px;
+}
+
+h6 {
+	font-size: 15px;
+}
+
+p {
+	margin-bottom: 15px;
+}
 	
 a {}
 
@@ -68,14 +101,15 @@ header {
 	width: 100%;
 	background-color: #333;}
 	
-.navigation ul {
+.navigation > nav > ul {
 	width: 990px;
 	margin: 0 auto;}
 
-.navigation ul li {
+.navigation > nav > ul > li {
+	position: relative;
 	float: left;}
 
-.navigation ul li a {
+.navigation > nav > ul > li > a {
 	font-family: Arial, sans-serif;
 	display: block;
 	cursor: pointer;
@@ -88,7 +122,46 @@ header {
     -moz-transition: all .3s ease;
     -o-transition: all .3s ease;}
 	
-.navigation ul li a:hover,.navigation ul li a.active {
+.navigation > nav > ul > li > a:hover,.navigation > nav > ul > li > a.active {
+	background-color: #ef5646;
+	color: #fff;}
+
+.navigation > nav > ul > li > ul {
+	max-height: 0px;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 45px;
+	z-index: 999;
+	width: 200px;
+	background-color: #333;
+	-webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+}
+
+.navigation > nav > ul > li:hover > ul {
+	max-height: 999px;
+}
+
+.navigation > nav > ul > li > ul > li {
+	float: left;
+width: 100%;}
+
+.navigation > nav > ul > li > ul > li > a {
+	font-family: Arial, sans-serif;
+	display: block;
+	cursor: pointer;
+	font-size: 15px;
+	font-weight: 400;
+	color: #fff;
+	text-decoration: none;
+	padding: 12px 15px;
+	-webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;}
+
+.navigation > nav > ul > li > ul > li > a:hover,.navigation > nav > ul > li > ul > li > a.active {
 	background-color: #ef5646;
 	color: #fff;}
 	
@@ -538,6 +611,11 @@ header {
  	margin-bottom: 20px;
  }
 
+  .single-page, .single-page img {
+  	max-width: 100%;
+  	height: auto;
+  }
+
  .single-page .content p {
  	margin-bottom: 15px;
  	float: left;
@@ -545,15 +623,15 @@ header {
  }
 
   .single-page .content h2 {
-    font-size: 1.8em;	
+    font-size: 1.5em;	
   }
 
   .single-page .content h3 {
-    font-size: 1.6em;	
+    font-size: 1.3em;	
   }
 
   .single-page .content h4 {
-    font-size: 1.5em;	
+    font-size: 1.2em;	
   }
 
  .cat-overlay {
@@ -773,6 +851,8 @@ footer {
 .show-hide {
 	display: none;}
 
+.admin b {color: #e8655c;}
+
 .chat-tit {
 	padding: 8px 15px;
 	background-color: #333;
@@ -845,7 +925,7 @@ footer {
 	position: absolute;
 	content: "";
 	right: 0px;
-	top: 5px;
+	top: 7px;
 	border-left: 6px solid #333;
 	border-top: 4px solid transparent;
 	border-bottom: 4px solid transparent;
@@ -884,7 +964,7 @@ footer {
 
 .archiveDate {
 	float: left;
-	width: 50%;
+	width: 100%;
 }
 
 .datepicker-inline {
@@ -895,9 +975,9 @@ footer {
 .last-song.page-args .arch-songs {
 	float: left;
 	width: 100%;
-	counter-reset: myCounter;
-	list-style-type: decimal;
-	
+	-webkit-column-count: 2;
+	-moz-column-count: 2; 
+	column-count: 2;
 }
 
 .arcgEmpty .archiveDate {
@@ -905,15 +985,11 @@ footer {
 }
 
 .last-song.page-args .one-song {
-	width: 50%;
-	display: block;
-	float: left;
-	height: 80px;
+	width: 100%;
 }
 
 .last-song.page-args .one-song-in {
 	width: 100%;
-	height: 70px;
 }
 
 .last-song.page-args .one-song-descr {
@@ -939,6 +1015,198 @@ font-weight: bold;}
     width: 100%; height: 400px;
     float: left;
     margin-bottom: 20px;
+}
+
+.downl {
+	border: 1px solid #c03f51;
+	padding: 5px 10px;
+	font-size: 18px;
+	display: inline-block;
+	color: #c03f51 !important;
+	text-decoration: none !important;
+}
+
+.downl span {
+	top: 3px;
+}
+
+.wpcf7-form {
+	float: left;
+	width: 100%;
+}
+
+.wpcf7-form p {
+	margin-bottom: 10px !important;
+}
+
+.wpcf7-form label span {
+	margin-top: 5px;
+}
+
+.wpcf7-form input {
+	width: 100%;
+	float: left;
+	padding: 0 15px;
+	border: 1px solid #ccc;
+	margin-bottom: 0px;
+}
+
+.wpcf7-form textarea {
+	width: 100%;
+	float: left;
+	padding: 15px;
+	border: 1px solid #ccc;
+	height: 120px;
+}
+
+.wpcf7-form-control-wrap {
+	float: left;
+	width: 100%;
+	display: block;
+}
+
+div.wpcf7-response-output {
+	float: left;
+	width: 100%;
+	margin: 0px !important;
+}
+
+.wpcf7-not-valid {
+	border: 1px solid #ff0000 !important;
+}
+
+.foot-menu ul li ul {
+	display: none;
+}
+
+.will-play {
+	height: 382px;
+}
+
+/* =WordPress Core
+-------------------------------------------------------------- */
+.alignnone {
+    margin: 5px 20px 20px 0;
+}
+ 
+.aligncenter,
+div.aligncenter {
+    display: block;
+    margin: 5px auto 5px auto;
+}
+ 
+.alignright {
+    float:right;
+    margin: 5px 0 20px 20px;
+}
+ 
+.alignleft {
+    float: left;
+    margin: 5px 20px 20px 0;
+}
+ 
+.aligncenter {
+    display: block;
+    margin: 5px auto 5px auto;
+}
+ 
+a img.alignright {
+    float: right;
+    margin: 5px 0 20px 20px;
+}
+ 
+a img.alignnone {
+    margin: 5px 20px 20px 0;
+}
+ 
+a img.alignleft {
+    float: left;
+    margin: 5px 20px 20px 0;
+}
+ 
+a img.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+ 
+.wp-caption {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    max-width: 96%; /* Image does not overflow the content area */
+    padding: 5px 3px 10px;
+    text-align: center;
+}
+ 
+.wp-caption.alignnone {
+    margin: 5px 20px 20px 0;
+}
+ 
+.wp-caption.alignleft {
+    margin: 5px 20px 20px 0;
+}
+ 
+.wp-caption.alignright {
+    margin: 5px 0 20px 20px;
+}
+ 
+.wp-caption img {
+    border: 0 none;
+    height: auto;
+    margin: 0;
+    max-width: 98.5%;
+    padding: 0;
+    width: auto;
+}
+ 
+.wp-caption p.wp-caption-text {
+    font-size: 11px;
+    line-height: 17px;
+    margin: 0;
+    padding: 0 4px 5px;
+}
+
+.viber {
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin-top: 15px;
+}
+
+.viber-tit {
+	font-size: 16px;
+	float: left;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.viber-thumb {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 10px;
+}
+
+.viber-thumb img {
+	width: 40px;
+	height: auto;
+}
+
+.viber-number {
+	display: inline-block;
+	vertical-align: top;
+	color: #7d529e;
+	font-size: 16px;
+}
+
+.viber-number-in {
+	display: table-cell;
+	height: 40px;
+	vertical-align: middle;
+}
+
+.viber-number-in span {
+	display: block;
+	font-size: 14px;
 }
 	
 @media(max-width: 1050px) {
@@ -1057,11 +1325,11 @@ font-weight: bold;}
 	margin: 5px 0px;
 	float: left;}
 	
-.navigation ul {
+.navigation > nav > ul {
 	display: none;
 	width: 100%;}
 	
-.navigation ul li {
+.navigation > nav > ul > li {
 	width: 100%;}
 	
 .slider {

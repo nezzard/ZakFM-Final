@@ -68,7 +68,7 @@ get_header(); ?>
                     <!-- Конец Слайдер -->
 
                     <!-- Блок рекламы под слайдером -->
-                    <a href="#" class="ads" target="_blank"><img src="http://placehold.it/670x120"></a>
+                    <a href="#" class="ads" target="_blank"><img src="<?php echo get_field('під_слайдером', 'option'); ?>"></a>
                     
                     <!-- Останні новини -->
                     <div class="last-news">
@@ -77,10 +77,10 @@ get_header(); ?>
                             <div class="last-news-half">
 
                                 <h3 class="wrap-tit">
-                                    Останні новини
+                                    АКТУАЛЬНО
                                 </h3>
                                 <?php                         
-                                $the_query = new WP_Query( array( 'category__in' => 4, 'posts_per_page' => 1 ) );
+                                $the_query = new WP_Query( array( 'category__in' => 5, 'posts_per_page' => 1 ) );
                                 ?>
                                 <?php if ( $the_query->have_posts() ) : ?>
                                     <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>                        
@@ -116,7 +116,7 @@ get_header(); ?>
 
                                 <div class="right-news">
                                     <?php                         
-                                    $the_query = new WP_Query( array( 'category__in' => 4, 'posts_per_page' => 5, 'offset' => 1 ) );
+                                    $the_query = new WP_Query( array( 'category__in' => 5, 'posts_per_page' => 5, 'offset' => 1 ) );
                                     ?>
                                     <?php if ( $the_query->have_posts() ) : ?>
                                         <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
@@ -161,7 +161,7 @@ get_header(); ?>
                             <div class="last-news-half">
 
                                 <h3 class="wrap-tit">
-                                    Останні новини
+                                    НАШІ НОВИНИ
                                 </h3>
                                 <?php                         
                                 $the_query = new WP_Query( array( 'category__in' => 4, 'posts_per_page' => 1 ) );
@@ -262,7 +262,7 @@ get_header(); ?>
                         
                     </div>
                     <!-- Блок рекламы под архивом -->
-                    <a href="#" class="ads" target="_blank"><img src="http://placehold.it/670x120"></a>
+                    <a href="#" class="ads" target="_blank"><img src="<?php echo get_field('після_архіву', 'option'); ?>"></a>
                     <!-- Конец Останні пісні -->
                     
                 </div>
