@@ -82,10 +82,8 @@
 
 
   function loadPlay(data){    
+    console.log(data);
 
-data.sort(function(a, b) {
-  return a.key - b.key;
-});
 
 
 
@@ -93,16 +91,16 @@ data.sort(function(a, b) {
 jQuery.each( data, function( key, value ) {
     //console.log(value);
     var img;
-    if(value.end){
-        img = value.end;
+    if(value.last.length > 0){
+        img = value.last;
     }
     else {
         img = 'http://placehold.it/150x150';
     }
+    console.log(value);
     
-    key = key+1;
-    jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">'+key+'</div><a href="#" data-youtube="'+value.post.youtube[0]+'" class="one-song-thumb nextP"><img class="minithumb" src="'+img+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.post.artist[0]+'</span>'+value.post.song[0]+'</a></div></div></div></div>');
-    if(typeof(value.post.youtube[0]) !=='undefined'){
+    jQuery('.all-songs').append('<div class="one-song"><div class="one-song-in"><div class="num">1</div><a href="#" data-youtube="'+value.yout+'" class="one-song-thumb nextP"><img class="minithumb" src="'+img+'"></a><div class="one-song-descr"><div class="one-song-tit"><a href="#"><span>'+value.artist+'</span>'+value.song+'</a></div></div></div></div>');
+    if(typeof(value.yout) !=='undefined'){
         jQuery('.nextP').addClass('thumb-yout');
 
     }

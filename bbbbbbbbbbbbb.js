@@ -56,7 +56,6 @@ function writet(myJson){
 	console.log(count + 'Test');
 
 	myJsonn.push(myJson);
-	console.log(myJsonn);
 
 	if(count === myJson.count){
 			socket.broadcast.emit('sendSongg', JSON.stringify(myJsonn));
@@ -134,8 +133,82 @@ return 	Promise.all(myRequests)
 		  		yout = false;
 		  	}
 
+		  	//Создаем пост с песней
+			return wp.song().create({
+			    title: artist+' - '+song,
+			    artist: artist,
+			    song: song,
+			    youtube: yout,
+			    status: 'publish'
+			}).then(function( responsed ) {
 
-writet({artist: artist, song: song, last: last, yout: yout, count: count});
+			//После создания поста, проверяем есть ли картинка, если да, загружаем ее и прикрепляем как миниатюру
+				if(last){
+					request.get({url: last, encoding: 'binary'}, function (err, response, body) {
+						//Чистим Артиста от лищних символов
+						artist = responsed.artist[0].replace(/\s+/g, '');
+						artist = artist.replace(/(\.)|([1-9])/g, "");
+
+						fs.writeFile("/tmp/img/"+convert(artist)+".png", body, 'binary', function(err) {
+							if(err){
+							    console.log('Ошибка при загрузке изображения на сервер');
+							}
+							else{
+							    console.log("Изображение сохранено!");
+
+							    //Изображение сохранилось, загружаем его в Wordpress
+								wp.media().file( '/tmp/img/'+convert(artist)+'.png' )
+								.create({
+									title: responsed.artist[0]
+								})
+								.then(function( responses ) {
+									//Обновляем пост, прикрепляем миниатюру
+									wp.song().id( responsed.id ).update({
+									  featured_media: responses.id
+									})
+									//Возвращаем айпи миниатюры 
+									console.log(chalk.red(myJson + ' 1 JSON'));
+									return responses.id;
+								})
+								.then(function(mediaId){
+									//Проверяем успешность и прикрепление изображения к песне
+									wp.media().id( mediaId ).then(function(media){
+								  		//return myJson.push({key: 1, post: responsed, end: media.guid.rendered});
+								  		writet({key: songArray[0]['id'], post: responsed, end: media.guid.rendered, count: count});
+								  		console.log(chalk.red(mediaId + ' тест'));
+								  		//Запускаеми сохранение в JSON
+
+								  		console.log(chalk.red(myJson + ' 2 JSON'));
+								  		// writet(myJson);
+									}).then(function(){
+										//Удаляем изображение из папки tmp
+								  		fs.unlinkSync("/tmp/img/"+convert(artist)+".png", function(err){
+								  			console.log('Ошибка в удалении файла'+ err);
+								  		});
+								  	})
+								  	.catch(function(mediaErr){
+								  		console.log("Ошибка media"+mediaErr);
+								  	})				    	
+								}).catch(function(mediaErr){
+								  		console.log("Ошибка media 2"+mediaErr);
+								})	
+							};
+
+						}); 
+
+					});
+				//Конец IF, загрузка изрбражения
+				}
+				else {
+					//Если изображения нету, отправляем массив без изрбражения
+					console.log('not find');
+					//myJson.push({key: 1, post: responsed, end: 0});
+					writet({key: songArray[0]['id'], post: responsed, end: 0, count: count});
+				//	writet(myJson);
+
+				};								
+				return  Promise.resolve(responsed);
+			});
 		//Конец promise (than)	
 		})
 	  	.catch(function(errorCreate2){
@@ -227,10 +300,7 @@ socket.emit('count', count);
 					//console.log('Не найдено ');
 
 					//ПЕРЕВІРИТИ ЧИ ДОДАЄ, КОЛИ ПІСНЮ ДОДАЛИ В ТЕПЕР ГРАЄ
-					socket.emit("create", {id: 0, song: songdata[0]['song'], artist: songdata[0]['artist']});
-
-
-
+					socket.emit("playlist", {id: 0, song: songdata[0]['song'], artist: songdata[0]['artist']})
 				})      	
 			} else {
 				//console.log(chalk.magenta('Изменений в текущей песни не обнаружено'));
@@ -256,9 +326,6 @@ socket.emit('count', count);
 
   socket.emit('getList');
 
-
-
-
   socket.on('playlist', function (data) {
     var result = JSON.parse(data);
 
@@ -279,7 +346,48 @@ result.reduce((lastRequestDone, item) => {
 
 
   				return lastRequestDone.then(() => 
-postSong(songArray, myJson, result.length));
+  				wp.song().search( item['artist']).then(function( posts ) {
+  				//Берем миниатюру из первого поста, если артист найден
+					return posts[0]['featured_media'];
+  				}).then(function(data){  			
+		  			return lastRequestDone.then(() => 
+		  				wp.song().search( item['artist']+' - '+item['song'] ).then(function( posts ) {
+		  				
+		  				//Ищем композицию по артисту и названию песни
+		  						if(!posts[0]){
+		  							 return lastRequestDone.then(() => postSong(songArray, myJson, result.length));
+		  						}
+		  						else{
+									//Если посты найдены, пушим их в массив и отправляем клиенту
+									console.log("Посты найдены ");
+
+									if(posts[0]['featured_media'] === 0){
+										//Отправляем клиенту массив БЕЗ миниатюрой 
+										//myJson.push({key: result[i]['id'], post: posts[0], end: 0});
+										return lastRequestDone.then(() => writet({key: item['id'], post: posts[0], end: 0, count: result.length}));
+										 console.log(chalk.yellow('Зашлдо'));
+										
+									}
+					  				wp.media().id( posts[0]['featured_media'] ).then(function(media){
+					  					//Отправляем клиенту массив с миниатюрой 
+					  					//myJson.push({key: result[i]['id'], post: posts[0], end: media.guid.rendered});
+
+					  					return lastRequestDone.then(() => writet({key: item['id'], post: posts[0], end: media.guid.rendered, count: result.length}));
+					  					
+
+					  				});			  							
+		  						}
+										
+
+				  		}));
+  				}).catch(function( err ) {
+
+					    return lastRequestDone.then(() => postSong(songArray, myJson, result.length));
+
+
+// Тут должна быть функция, если нету картинки в исполнителе который уже был postSong()			
+
+				}));
 
   	//		writet(myJson);
 
